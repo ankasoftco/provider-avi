@@ -9,8 +9,9 @@ import (
 	_ "embed"
 
 	ujconfig "github.com/upbound/upjet/pkg/config"
+    
+	aviprovider "github.com/ankasoftco/provider-nsxt/config/aviprovider"
 
-	"github.com/upbound/upjet-provider-template/config/null"
 )
 
 const (
@@ -36,7 +37,7 @@ func GetProvider() *ujconfig.Provider {
 
 	for _, configure := range []func(provider *ujconfig.Provider){
 		// add custom config functions
-		null.Configure,
+		aviprovider.Configure,
 	} {
 		configure(pc)
 	}
