@@ -9,9 +9,8 @@ import (
 	_ "embed"
 
 	ujconfig "github.com/upbound/upjet/pkg/config"
-    
-	aviprovider "github.com/ankasoftco/provider-nsxt/config/aviprovider"
 
+	aviprovider "github.com/ankasoftco/provider-nsxt/config/aviprovider"
 )
 
 const (
