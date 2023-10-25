@@ -1,0 +1,3463 @@
+---
+apiVersion: apiextensions.k8s.io/v1
+kind: CustomResourceDefinition
+metadata:
+  annotations:
+    controller-gen.kubebuilder.io/version: v0.12.1
+  name: clouds.avi.crossplane.io
+spec:
+  group: avi.crossplane.io
+  names:
+    categories:
+    - crossplane
+    - managed
+    - avi
+    kind: Cloud
+    listKind: CloudList
+    plural: clouds
+    singular: cloud
+  scope: Cluster
+  versions:
+  - additionalPrinterColumns:
+    - jsonPath: .status.conditions[?(@.type=='Ready')].status
+      name: READY
+      type: string
+    - jsonPath: .status.conditions[?(@.type=='Synced')].status
+      name: SYNCED
+      type: string
+    - jsonPath: .metadata.annotations.crossplane\.io/external-name
+      name: EXTERNAL-NAME
+      type: string
+    - jsonPath: .metadata.creationTimestamp
+      name: AGE
+      type: date
+    name: v1alpha1
+    schema:
+      openAPIV3Schema:
+        description: Cloud is the Schema for the Clouds API. <no value>
+        properties:
+          apiVersion:
+            description: 'APIVersion defines the versioned schema of this representation
+              of an object. Servers should convert recognized schemas to the latest
+              internal value, and may reject unrecognized values. More info: https://git.k8s.io/community/contributors/devel/sig-architecture/api-conventions.md#resources'
+            type: string
+          kind:
+            description: 'Kind is a string value representing the REST resource this
+              object represents. Servers may infer this from the endpoint the client
+              submits requests to. Cannot be updated. In CamelCase. More info: https://git.k8s.io/community/contributors/devel/sig-architecture/api-conventions.md#types-kinds'
+            type: string
+          metadata:
+            type: object
+          spec:
+            description: CloudSpec defines the desired state of Cloud
+            properties:
+              deletionPolicy:
+                default: Delete
+                description: 'DeletionPolicy specifies what will happen to the underlying
+                  external when this managed resource is deleted - either "Delete"
+                  or "Orphan" the external resource. This field is planned to be deprecated
+                  in favor of the ManagementPolicies field in a future release. Currently,
+                  both could be set independently and non-default values would be
+                  honored if the feature flag is enabled. See the design doc for more
+                  information: https://github.com/crossplane/crossplane/blob/499895a25d1a1a0ba1604944ef98ac7a1a71f197/design/design-doc-observe-only-resources.md?plain=1#L223'
+                enum:
+                - Orphan
+                - Delete
+                type: string
+              forProvider:
+                properties:
+                  autoscalePollingInterval:
+                    type: string
+                  awsConfiguration:
+                    items:
+                      properties:
+                        accessKeyIdSecretRef:
+                          description: A SecretKeySelector is a reference to a secret
+                            key in an arbitrary namespace.
+                          properties:
+                            key:
+                              description: The key to select.
+                              type: string
+                            name:
+                              description: Name of the secret.
+                              type: string
+                            namespace:
+                              description: Namespace of the secret.
+                              type: string
+                          required:
+                          - key
+                          - name
+                          - namespace
+                          type: object
+                        asgPollInterval:
+                          type: string
+                        ebsEncryption:
+                          items:
+                            properties:
+                              masterKey:
+                                type: string
+                              mode:
+                                type: string
+                            type: object
+                          type: array
+                        freeElasticips:
+                          type: string
+                        iamAssumeRole:
+                          type: string
+                        publishVipToPublicZone:
+                          type: string
+                        region:
+                          type: string
+                        route53Integration:
+                          type: string
+                        s3Encryption:
+                          items:
+                            properties:
+                              masterKey:
+                                type: string
+                              mode:
+                                type: string
+                            type: object
+                          type: array
+                        secretAccessKeySecretRef:
+                          description: A SecretKeySelector is a reference to a secret
+                            key in an arbitrary namespace.
+                          properties:
+                            key:
+                              description: The key to select.
+                              type: string
+                            name:
+                              description: Name of the secret.
+                              type: string
+                            namespace:
+                              description: Namespace of the secret.
+                              type: string
+                          required:
+                          - key
+                          - name
+                          - namespace
+                          type: object
+                        sqsEncryption:
+                          items:
+                            properties:
+                              masterKey:
+                                type: string
+                              mode:
+                                type: string
+                            type: object
+                          type: array
+                        ttl:
+                          type: string
+                        useIamRoles:
+                          type: string
+                        useSnsSqs:
+                          type: string
+                        vpc:
+                          type: string
+                        vpcId:
+                          type: string
+                        zones:
+                          items:
+                            properties:
+                              availabilityZone:
+                                type: string
+                              mgmtNetworkName:
+                                type: string
+                              mgmtNetworkUuid:
+                                type: string
+                            type: object
+                          type: array
+                      type: object
+                    type: array
+                  azureConfiguration:
+                    items:
+                      properties:
+                        availabilityZones:
+                          items:
+                            type: string
+                          type: array
+                        cloudCredentialsRef:
+                          type: string
+                        desId:
+                          type: string
+                        location:
+                          type: string
+                        networkInfo:
+                          items:
+                            properties:
+                              managementNetworkId:
+                                type: string
+                              seNetworkId:
+                                type: string
+                              virtualNetworkId:
+                                type: string
+                            type: object
+                          type: array
+                        resourceGroup:
+                          type: string
+                        subscriptionId:
+                          type: string
+                        useAzureDns:
+                          type: string
+                        useEnhancedHa:
+                          type: string
+                        useManagedDisks:
+                          type: string
+                        useStandardAlb:
+                          type: string
+                      type: object
+                    type: array
+                  cloudstackConfiguration:
+                    items:
+                      properties:
+                        accessKeyIdSecretRef:
+                          description: A SecretKeySelector is a reference to a secret
+                            key in an arbitrary namespace.
+                          properties:
+                            key:
+                              description: The key to select.
+                              type: string
+                            name:
+                              description: Name of the secret.
+                              type: string
+                            namespace:
+                              description: Namespace of the secret.
+                              type: string
+                          required:
+                          - key
+                          - name
+                          - namespace
+                          type: object
+                        apiUrl:
+                          type: string
+                        cntrPublicIp:
+                          type: string
+                        hypervisor:
+                          type: string
+                        mgmtNetworkName:
+                          type: string
+                        mgmtNetworkUuid:
+                          type: string
+                        secretAccessKeySecretRef:
+                          description: A SecretKeySelector is a reference to a secret
+                            key in an arbitrary namespace.
+                          properties:
+                            key:
+                              description: The key to select.
+                              type: string
+                            name:
+                              description: Name of the secret.
+                              type: string
+                            namespace:
+                              description: Namespace of the secret.
+                              type: string
+                          required:
+                          - key
+                          - name
+                          - namespace
+                          type: object
+                      required:
+                      - accessKeyIdSecretRef
+                      - secretAccessKeySecretRef
+                      type: object
+                    type: array
+                  configpbAttributes:
+                    items:
+                      properties:
+                        version:
+                          type: string
+                      type: object
+                    type: array
+                  customTags:
+                    items:
+                      properties:
+                        tagKey:
+                          type: string
+                        tagVal:
+                          type: string
+                      type: object
+                    type: array
+                  dhcpEnabled:
+                    type: string
+                  dnsProviderRef:
+                    type: string
+                  dnsResolutionOnSe:
+                    type: string
+                  dnsResolvers:
+                    items:
+                      properties:
+                        fixedTtl:
+                          type: string
+                        minTtl:
+                          type: string
+                        nameserverIps:
+                          items:
+                            properties:
+                              addr:
+                                type: string
+                              type:
+                                type: string
+                            type: object
+                          type: array
+                        resolverName:
+                          type: string
+                        useMgmt:
+                          type: string
+                      type: object
+                    type: array
+                  dockerConfiguration:
+                    items:
+                      properties:
+                        appSyncFrequency:
+                          type: string
+                        caTlsKeyAndCertificateRef:
+                          type: string
+                        clientTlsKeyAndCertificateRef:
+                          type: string
+                        containerPortMatchHttpService:
+                          type: string
+                        coredumpDirectory:
+                          type: string
+                        disableAutoBackendServiceSync:
+                          type: string
+                        disableAutoFrontendServiceSync:
+                          type: string
+                        disableAutoSeCreation:
+                          type: string
+                        dockerRegistrySe:
+                          items:
+                            properties:
+                              oshiftRegistry:
+                                items:
+                                  properties:
+                                    registryNamespace:
+                                      type: string
+                                    registryService:
+                                      type: string
+                                    registryVip:
+                                      items:
+                                        properties:
+                                          addr:
+                                            type: string
+                                          type:
+                                            type: string
+                                        type: object
+                                      type: array
+                                  type: object
+                                type: array
+                              passwordSecretRef:
+                                description: A SecretKeySelector is a reference to
+                                  a secret key in an arbitrary namespace.
+                                properties:
+                                  key:
+                                    description: The key to select.
+                                    type: string
+                                  name:
+                                    description: Name of the secret.
+                                    type: string
+                                  namespace:
+                                    description: Namespace of the secret.
+                                    type: string
+                                required:
+                                - key
+                                - name
+                                - namespace
+                                type: object
+                              private:
+                                type: string
+                              registry:
+                                type: string
+                              username:
+                                type: string
+                            type: object
+                          type: array
+                        eastWestPlacementSubnet:
+                          items:
+                            properties:
+                              ipAddr:
+                                items:
+                                  properties:
+                                    addr:
+                                      type: string
+                                    type:
+                                      type: string
+                                  type: object
+                                type: array
+                              mask:
+                                type: string
+                            type: object
+                          type: array
+                        enableEventSubscription:
+                          type: string
+                        feproxyContainerPortAsService:
+                          type: string
+                        feproxyVipsEnableProxyArp:
+                          type: string
+                        fleetEndpoint:
+                          type: string
+                        httpContainerPorts:
+                          items:
+                            type: number
+                          type: array
+                        seDeploymentMethod:
+                          type: string
+                        seExcludeAttributes:
+                          items:
+                            properties:
+                              attribute:
+                                type: string
+                              value:
+                                type: string
+                            type: object
+                          type: array
+                        seIncludeAttributes:
+                          items:
+                            properties:
+                              attribute:
+                                type: string
+                              value:
+                                type: string
+                            type: object
+                          type: array
+                        seSpawnRate:
+                          type: string
+                        seVolume:
+                          type: string
+                        servicesAccessibleAllInterfaces:
+                          type: string
+                        sshUserRef:
+                          type: string
+                        ucpNodes:
+                          items:
+                            type: string
+                          type: array
+                        useContainerIpPort:
+                          type: string
+                        useControllerImage:
+                          type: string
+                      type: object
+                    type: array
+                  eastWestDnsProviderRef:
+                    type: string
+                  eastWestIpamProviderRef:
+                    type: string
+                  enableVipOnAllInterfaces:
+                    type: string
+                  enableVipStaticRoutes:
+                    type: string
+                  gcpConfiguration:
+                    items:
+                      properties:
+                        cloudCredentialsRef:
+                          type: string
+                        encryptionKeys:
+                          items:
+                            properties:
+                              gcsBucketKmsKeyId:
+                                type: string
+                              gcsObjectsKmsKeyId:
+                                type: string
+                              seDiskKmsKeyId:
+                                type: string
+                              seImageKmsKeyId:
+                                type: string
+                            type: object
+                          type: array
+                        firewallTargetTags:
+                          items:
+                            type: string
+                          type: array
+                        gcpServiceAccountEmail:
+                          type: string
+                        gcsBucketName:
+                          type: string
+                        gcsProjectId:
+                          type: string
+                        networkConfig:
+                          items:
+                            properties:
+                              config:
+                                type: string
+                              inband:
+                                items:
+                                  properties:
+                                    vpcNetworkName:
+                                      type: string
+                                    vpcProjectId:
+                                      type: string
+                                    vpcSubnetName:
+                                      type: string
+                                  type: object
+                                type: array
+                              oneArm:
+                                items:
+                                  properties:
+                                    dataVpcNetworkName:
+                                      type: string
+                                    dataVpcProjectId:
+                                      type: string
+                                    dataVpcSubnetName:
+                                      type: string
+                                    managementVpcNetworkName:
+                                      type: string
+                                    managementVpcProjectId:
+                                      type: string
+                                    managementVpcSubnetName:
+                                      type: string
+                                  type: object
+                                type: array
+                              twoArm:
+                                items:
+                                  properties:
+                                    backendDataVpcNetworkName:
+                                      type: string
+                                    backendDataVpcProjectId:
+                                      type: string
+                                    backendDataVpcSubnetName:
+                                      type: string
+                                    frontendDataVpcNetworkName:
+                                      type: string
+                                    frontendDataVpcProjectId:
+                                      type: string
+                                    frontendDataVpcSubnetName:
+                                      type: string
+                                    managementVpcNetworkName:
+                                      type: string
+                                    managementVpcProjectId:
+                                      type: string
+                                    managementVpcSubnetName:
+                                      type: string
+                                  type: object
+                                type: array
+                            type: object
+                          type: array
+                        regionName:
+                          type: string
+                        seProjectId:
+                          type: string
+                        vipAllocationStrategy:
+                          items:
+                            properties:
+                              ilb:
+                                items:
+                                  properties:
+                                    cloudRouterNames:
+                                      items:
+                                        type: string
+                                      type: array
+                                  type: object
+                                type: array
+                              mode:
+                                type: string
+                              routes:
+                                items:
+                                  properties:
+                                    matchSeGroupSubnet:
+                                      type: string
+                                    routePriority:
+                                      type: string
+                                  type: object
+                                type: array
+                            type: object
+                          type: array
+                        zones:
+                          items:
+                            type: string
+                          type: array
+                      type: object
+                    type: array
+                  ip6AutocfgEnabled:
+                    type: string
+                  ipamProviderRef:
+                    type: string
+                  licenseTier:
+                    type: string
+                  licenseType:
+                    type: string
+                  linuxserverConfiguration:
+                    items:
+                      properties:
+                        hosts:
+                          items:
+                            properties:
+                              hostAttr:
+                                items:
+                                  properties:
+                                    attrKey:
+                                      type: string
+                                    attrVal:
+                                      type: string
+                                  type: object
+                                type: array
+                              hostIp:
+                                items:
+                                  properties:
+                                    addr:
+                                      type: string
+                                    type:
+                                      type: string
+                                  type: object
+                                type: array
+                              nodeAvailabilityZone:
+                                type: string
+                              seGroupRef:
+                                type: string
+                            type: object
+                          type: array
+                        seInbandMgmt:
+                          type: string
+                        seLogDiskPath:
+                          type: string
+                        seLogDiskSizeGb:
+                          type: string
+                        seSysDiskPath:
+                          type: string
+                        seSysDiskSizeGb:
+                          type: string
+                        sshUserRef:
+                          type: string
+                      type: object
+                    type: array
+                  maintenanceMode:
+                    type: string
+                  markers:
+                    items:
+                      properties:
+                        key:
+                          type: string
+                        values:
+                          items:
+                            type: string
+                          type: array
+                      type: object
+                    type: array
+                  metricsPollingInterval:
+                    type: string
+                  mtu:
+                    type: string
+                  name:
+                    type: string
+                  nsxtConfiguration:
+                    items:
+                      properties:
+                        automateDfwRules:
+                          type: string
+                        dataNetworkConfig:
+                          items:
+                            properties:
+                              tier1SegmentConfig:
+                                items:
+                                  properties:
+                                    automatic:
+                                      items:
+                                        properties:
+                                          nsxtSegmentSubnet:
+                                            items:
+                                              properties:
+                                                ipAddr:
+                                                  items:
+                                                    properties:
+                                                      addr:
+                                                        type: string
+                                                      type:
+                                                        type: string
+                                                    type: object
+                                                  type: array
+                                                mask:
+                                                  type: string
+                                              type: object
+                                            type: array
+                                          numSePerSegment:
+                                            type: string
+                                          tier1LrIds:
+                                            items:
+                                              type: string
+                                            type: array
+                                        type: object
+                                      type: array
+                                    manual:
+                                      items:
+                                        properties:
+                                          tier1Lrs:
+                                            items:
+                                              properties:
+                                                localeService:
+                                                  type: string
+                                                segmentId:
+                                                  type: string
+                                                tier1LrId:
+                                                  type: string
+                                              type: object
+                                            type: array
+                                        type: object
+                                      type: array
+                                    segmentConfigMode:
+                                      type: string
+                                  type: object
+                                type: array
+                              transportZone:
+                                type: string
+                              tzType:
+                                type: string
+                              vlanSegments:
+                                items:
+                                  type: string
+                                type: array
+                            type: object
+                          type: array
+                        domainId:
+                          type: string
+                        enforcementpointId:
+                          type: string
+                        managementNetworkConfig:
+                          items:
+                            properties:
+                              overlaySegment:
+                                items:
+                                  properties:
+                                    localeService:
+                                      type: string
+                                    segmentId:
+                                      type: string
+                                    tier1LrId:
+                                      type: string
+                                  type: object
+                                type: array
+                              transportZone:
+                                type: string
+                              tzType:
+                                type: string
+                              vlanSegment:
+                                type: string
+                            type: object
+                          type: array
+                        nsxtCredentialsRef:
+                          type: string
+                        nsxtUrl:
+                          type: string
+                        siteId:
+                          type: string
+                      type: object
+                    type: array
+                  ntpConfiguration:
+                    items:
+                      properties:
+                        ntpAuthenticationKeys:
+                          items:
+                            properties:
+                              algorithm:
+                                type: string
+                              key:
+                                type: string
+                              keyNumber:
+                                type: string
+                            type: object
+                          type: array
+                        ntpServerList:
+                          items:
+                            properties:
+                              addr:
+                                type: string
+                              type:
+                                type: string
+                            type: object
+                          type: array
+                        ntpServers:
+                          items:
+                            properties:
+                              keyNumber:
+                                type: string
+                              server:
+                                items:
+                                  properties:
+                                    addr:
+                                      type: string
+                                    type:
+                                      type: string
+                                  type: object
+                                type: array
+                            type: object
+                          type: array
+                      type: object
+                    type: array
+                  objNamePrefix:
+                    type: string
+                  openstackConfiguration:
+                    items:
+                      properties:
+                        adminTenant:
+                          type: string
+                        adminTenantUuid:
+                          type: string
+                        allowedAddressPairs:
+                          type: string
+                        antiAffinity:
+                          type: string
+                        authUrl:
+                          type: string
+                        configDrive:
+                          type: string
+                        contrailDisablePolicy:
+                          type: string
+                        contrailEndpoint:
+                          type: string
+                        contrailPlugin:
+                          type: string
+                        customSeImageProperties:
+                          items:
+                            properties:
+                              name:
+                                type: string
+                              value:
+                                type: string
+                            type: object
+                          type: array
+                        enableOsObjectCaching:
+                          type: string
+                        enableTagging:
+                          type: string
+                        externalNetworks:
+                          type: string
+                        freeFloatingips:
+                          type: string
+                        hypervisor:
+                          type: string
+                        hypervisorProperties:
+                          items:
+                            properties:
+                              hypervisor:
+                                type: string
+                              imageProperties:
+                                items:
+                                  properties:
+                                    name:
+                                      type: string
+                                    value:
+                                      type: string
+                                  type: object
+                                type: array
+                            type: object
+                          type: array
+                        imgFormat:
+                          type: string
+                        importKeystoneTenants:
+                          type: string
+                        insecure:
+                          type: string
+                        keystoneHost:
+                          type: string
+                        mapAdminToCloudadmin:
+                          type: string
+                        mgmtNetworkName:
+                          type: string
+                        mgmtNetworkUuid:
+                          type: string
+                        nameOwner:
+                          type: string
+                        neutronRbac:
+                          type: string
+                        passwordSecretRef:
+                          description: A SecretKeySelector is a reference to a secret
+                            key in an arbitrary namespace.
+                          properties:
+                            key:
+                              description: The key to select.
+                              type: string
+                            name:
+                              description: Name of the secret.
+                              type: string
+                            namespace:
+                              description: Namespace of the secret.
+                              type: string
+                          required:
+                          - key
+                          - name
+                          - namespace
+                          type: object
+                        privilege:
+                          type: string
+                        provName:
+                          items:
+                            type: string
+                          type: array
+                        providerVipNetworks:
+                          items:
+                            properties:
+                              osNetworkUuid:
+                                type: string
+                              osTenantUuids:
+                                items:
+                                  type: string
+                                type: array
+                            type: object
+                          type: array
+                        region:
+                          type: string
+                        roleMapping:
+                          items:
+                            properties:
+                              aviRole:
+                                type: string
+                              osRole:
+                                type: string
+                            type: object
+                          type: array
+                        securityGroups:
+                          type: string
+                        tenantSe:
+                          type: string
+                        useAdminUrl:
+                          type: string
+                        useInternalEndpoints:
+                          type: string
+                        useKeystoneAuth:
+                          type: string
+                        username:
+                          type: string
+                        vipPortInAdminTenant:
+                          type: string
+                      type: object
+                    type: array
+                  preferStaticRoutes:
+                    type: string
+                  proxyConfiguration:
+                    items:
+                      properties:
+                        host:
+                          type: string
+                        passwordSecretRef:
+                          description: A SecretKeySelector is a reference to a secret
+                            key in an arbitrary namespace.
+                          properties:
+                            key:
+                              description: The key to select.
+                              type: string
+                            name:
+                              description: Name of the secret.
+                              type: string
+                            namespace:
+                              description: Namespace of the secret.
+                              type: string
+                          required:
+                          - key
+                          - name
+                          - namespace
+                          type: object
+                        port:
+                          type: string
+                        username:
+                          type: string
+                      type: object
+                    type: array
+                  rancherConfiguration:
+                    items:
+                      properties:
+                        accessKey:
+                          type: string
+                        appSyncFrequency:
+                          type: string
+                        containerPortMatchHttpService:
+                          type: string
+                        coredumpDirectory:
+                          type: string
+                        disableAutoBackendServiceSync:
+                          type: string
+                        disableAutoFrontendServiceSync:
+                          type: string
+                        disableAutoSeCreation:
+                          type: string
+                        dockerRegistrySe:
+                          items:
+                            properties:
+                              oshiftRegistry:
+                                items:
+                                  properties:
+                                    registryNamespace:
+                                      type: string
+                                    registryService:
+                                      type: string
+                                    registryVip:
+                                      items:
+                                        properties:
+                                          addr:
+                                            type: string
+                                          type:
+                                            type: string
+                                        type: object
+                                      type: array
+                                  type: object
+                                type: array
+                              passwordSecretRef:
+                                description: A SecretKeySelector is a reference to
+                                  a secret key in an arbitrary namespace.
+                                properties:
+                                  key:
+                                    description: The key to select.
+                                    type: string
+                                  name:
+                                    description: Name of the secret.
+                                    type: string
+                                  namespace:
+                                    description: Namespace of the secret.
+                                    type: string
+                                required:
+                                - key
+                                - name
+                                - namespace
+                                type: object
+                              private:
+                                type: string
+                              registry:
+                                type: string
+                              username:
+                                type: string
+                            type: object
+                          type: array
+                        eastWestPlacementSubnet:
+                          items:
+                            properties:
+                              ipAddr:
+                                items:
+                                  properties:
+                                    addr:
+                                      type: string
+                                    type:
+                                      type: string
+                                  type: object
+                                type: array
+                              mask:
+                                type: string
+                            type: object
+                          type: array
+                        enableEventSubscription:
+                          type: string
+                        feproxyContainerPortAsService:
+                          type: string
+                        feproxyVipsEnableProxyArp:
+                          type: string
+                        fleetEndpoint:
+                          type: string
+                        httpContainerPorts:
+                          items:
+                            type: number
+                          type: array
+                        nuageController:
+                          items:
+                            properties:
+                              nuageOrganization:
+                                type: string
+                              nuagePasswordSecretRef:
+                                description: A SecretKeySelector is a reference to
+                                  a secret key in an arbitrary namespace.
+                                properties:
+                                  key:
+                                    description: The key to select.
+                                    type: string
+                                  name:
+                                    description: Name of the secret.
+                                    type: string
+                                  namespace:
+                                    description: Namespace of the secret.
+                                    type: string
+                                required:
+                                - key
+                                - name
+                                - namespace
+                                type: object
+                              nuagePort:
+                                type: string
+                              nuageUsername:
+                                type: string
+                              nuageVsdHost:
+                                type: string
+                              seDomain:
+                                type: string
+                              seEnterprise:
+                                type: string
+                              seNetwork:
+                                type: string
+                              sePolicyGroup:
+                                type: string
+                              seUser:
+                                type: string
+                              seZone:
+                                type: string
+                            type: object
+                          type: array
+                        rancherServers:
+                          items:
+                            type: string
+                          type: array
+                        seDeploymentMethod:
+                          type: string
+                        seExcludeAttributes:
+                          items:
+                            properties:
+                              attribute:
+                                type: string
+                              value:
+                                type: string
+                            type: object
+                          type: array
+                        seIncludeAttributes:
+                          items:
+                            properties:
+                              attribute:
+                                type: string
+                              value:
+                                type: string
+                            type: object
+                          type: array
+                        seSpawnRate:
+                          type: string
+                        seVolume:
+                          type: string
+                        secretKeySecretRef:
+                          description: A SecretKeySelector is a reference to a secret
+                            key in an arbitrary namespace.
+                          properties:
+                            key:
+                              description: The key to select.
+                              type: string
+                            name:
+                              description: Name of the secret.
+                              type: string
+                            namespace:
+                              description: Namespace of the secret.
+                              type: string
+                          required:
+                          - key
+                          - name
+                          - namespace
+                          type: object
+                        servicesAccessibleAllInterfaces:
+                          type: string
+                        sshUserRef:
+                          type: string
+                        useContainerIpPort:
+                          type: string
+                        useControllerImage:
+                          type: string
+                      type: object
+                    type: array
+                  seGroupTemplateRef:
+                    type: string
+                  stateBasedDnsRegistration:
+                    type: string
+                  tenantRef:
+                    type: string
+                  uuid:
+                    type: string
+                  vcaConfiguration:
+                    items:
+                      properties:
+                        privilege:
+                          type: string
+                        vcaHost:
+                          type: string
+                        vcaInstance:
+                          type: string
+                        vcaMgmtNetwork:
+                          type: string
+                        vcaOrgnization:
+                          type: string
+                        vcaPasswordSecretRef:
+                          description: A SecretKeySelector is a reference to a secret
+                            key in an arbitrary namespace.
+                          properties:
+                            key:
+                              description: The key to select.
+                              type: string
+                            name:
+                              description: Name of the secret.
+                              type: string
+                            namespace:
+                              description: Namespace of the secret.
+                              type: string
+                          required:
+                          - key
+                          - name
+                          - namespace
+                          type: object
+                        vcaUsername:
+                          type: string
+                        vcaVdc:
+                          type: string
+                      required:
+                      - vcaPasswordSecretRef
+                      type: object
+                    type: array
+                  vcenterConfiguration:
+                    items:
+                      properties:
+                        contentLib:
+                          items:
+                            properties:
+                              id:
+                                type: string
+                              name:
+                                type: string
+                            type: object
+                          type: array
+                        datacenter:
+                          type: string
+                        isNsxEnvironment:
+                          type: string
+                        managementIpSubnet:
+                          items:
+                            properties:
+                              ipAddr:
+                                items:
+                                  properties:
+                                    addr:
+                                      type: string
+                                    type:
+                                      type: string
+                                  type: object
+                                type: array
+                              mask:
+                                type: string
+                            type: object
+                          type: array
+                        managementNetwork:
+                          type: string
+                        passwordSecretRef:
+                          description: A SecretKeySelector is a reference to a secret
+                            key in an arbitrary namespace.
+                          properties:
+                            key:
+                              description: The key to select.
+                              type: string
+                            name:
+                              description: Name of the secret.
+                              type: string
+                            namespace:
+                              description: Namespace of the secret.
+                              type: string
+                          required:
+                          - key
+                          - name
+                          - namespace
+                          type: object
+                        privilege:
+                          type: string
+                        useContentLib:
+                          type: string
+                        username:
+                          type: string
+                        vcenterTemplateSeLocation:
+                          type: string
+                        vcenterUrl:
+                          type: string
+                      type: object
+                    type: array
+                  vmcDeployment:
+                    type: string
+                  vtype:
+                    type: string
+                type: object
+              initProvider:
+                description: THIS IS AN ALPHA FIELD. Do not use it in production.
+                  It is not honored unless the relevant Crossplane feature flag is
+                  enabled, and may be changed or removed without notice. InitProvider
+                  holds the same fields as ForProvider, with the exception of Identifier
+                  and other resource reference fields. The fields that are in InitProvider
+                  are merged into ForProvider when the resource is created. The same
+                  fields are also added to the terraform ignore_changes hook, to avoid
+                  updating them after creation. This is useful for fields that are
+                  required on creation, but we do not desire to update them after
+                  creation, for example because of an external controller is managing
+                  them, like an autoscaler.
+                properties:
+                  autoscalePollingInterval:
+                    type: string
+                  awsConfiguration:
+                    items:
+                      properties:
+                        asgPollInterval:
+                          type: string
+                        ebsEncryption:
+                          items:
+                            properties:
+                              masterKey:
+                                type: string
+                              mode:
+                                type: string
+                            type: object
+                          type: array
+                        freeElasticips:
+                          type: string
+                        iamAssumeRole:
+                          type: string
+                        publishVipToPublicZone:
+                          type: string
+                        region:
+                          type: string
+                        route53Integration:
+                          type: string
+                        s3Encryption:
+                          items:
+                            properties:
+                              masterKey:
+                                type: string
+                              mode:
+                                type: string
+                            type: object
+                          type: array
+                        sqsEncryption:
+                          items:
+                            properties:
+                              masterKey:
+                                type: string
+                              mode:
+                                type: string
+                            type: object
+                          type: array
+                        ttl:
+                          type: string
+                        useIamRoles:
+                          type: string
+                        useSnsSqs:
+                          type: string
+                        vpc:
+                          type: string
+                        vpcId:
+                          type: string
+                        zones:
+                          items:
+                            properties:
+                              availabilityZone:
+                                type: string
+                              mgmtNetworkName:
+                                type: string
+                              mgmtNetworkUuid:
+                                type: string
+                            type: object
+                          type: array
+                      type: object
+                    type: array
+                  azureConfiguration:
+                    items:
+                      properties:
+                        availabilityZones:
+                          items:
+                            type: string
+                          type: array
+                        cloudCredentialsRef:
+                          type: string
+                        desId:
+                          type: string
+                        location:
+                          type: string
+                        networkInfo:
+                          items:
+                            properties:
+                              managementNetworkId:
+                                type: string
+                              seNetworkId:
+                                type: string
+                              virtualNetworkId:
+                                type: string
+                            type: object
+                          type: array
+                        resourceGroup:
+                          type: string
+                        subscriptionId:
+                          type: string
+                        useAzureDns:
+                          type: string
+                        useEnhancedHa:
+                          type: string
+                        useManagedDisks:
+                          type: string
+                        useStandardAlb:
+                          type: string
+                      type: object
+                    type: array
+                  cloudstackConfiguration:
+                    items:
+                      properties:
+                        apiUrl:
+                          type: string
+                        cntrPublicIp:
+                          type: string
+                        hypervisor:
+                          type: string
+                        mgmtNetworkName:
+                          type: string
+                        mgmtNetworkUuid:
+                          type: string
+                      type: object
+                    type: array
+                  configpbAttributes:
+                    items:
+                      properties:
+                        version:
+                          type: string
+                      type: object
+                    type: array
+                  customTags:
+                    items:
+                      properties:
+                        tagKey:
+                          type: string
+                        tagVal:
+                          type: string
+                      type: object
+                    type: array
+                  dhcpEnabled:
+                    type: string
+                  dnsProviderRef:
+                    type: string
+                  dnsResolutionOnSe:
+                    type: string
+                  dnsResolvers:
+                    items:
+                      properties:
+                        fixedTtl:
+                          type: string
+                        minTtl:
+                          type: string
+                        nameserverIps:
+                          items:
+                            properties:
+                              addr:
+                                type: string
+                              type:
+                                type: string
+                            type: object
+                          type: array
+                        resolverName:
+                          type: string
+                        useMgmt:
+                          type: string
+                      type: object
+                    type: array
+                  dockerConfiguration:
+                    items:
+                      properties:
+                        appSyncFrequency:
+                          type: string
+                        caTlsKeyAndCertificateRef:
+                          type: string
+                        clientTlsKeyAndCertificateRef:
+                          type: string
+                        containerPortMatchHttpService:
+                          type: string
+                        coredumpDirectory:
+                          type: string
+                        disableAutoBackendServiceSync:
+                          type: string
+                        disableAutoFrontendServiceSync:
+                          type: string
+                        disableAutoSeCreation:
+                          type: string
+                        dockerRegistrySe:
+                          items:
+                            properties:
+                              oshiftRegistry:
+                                items:
+                                  properties:
+                                    registryNamespace:
+                                      type: string
+                                    registryService:
+                                      type: string
+                                    registryVip:
+                                      items:
+                                        properties:
+                                          addr:
+                                            type: string
+                                          type:
+                                            type: string
+                                        type: object
+                                      type: array
+                                  type: object
+                                type: array
+                              private:
+                                type: string
+                              registry:
+                                type: string
+                              username:
+                                type: string
+                            type: object
+                          type: array
+                        eastWestPlacementSubnet:
+                          items:
+                            properties:
+                              ipAddr:
+                                items:
+                                  properties:
+                                    addr:
+                                      type: string
+                                    type:
+                                      type: string
+                                  type: object
+                                type: array
+                              mask:
+                                type: string
+                            type: object
+                          type: array
+                        enableEventSubscription:
+                          type: string
+                        feproxyContainerPortAsService:
+                          type: string
+                        feproxyVipsEnableProxyArp:
+                          type: string
+                        fleetEndpoint:
+                          type: string
+                        httpContainerPorts:
+                          items:
+                            type: number
+                          type: array
+                        seDeploymentMethod:
+                          type: string
+                        seExcludeAttributes:
+                          items:
+                            properties:
+                              attribute:
+                                type: string
+                              value:
+                                type: string
+                            type: object
+                          type: array
+                        seIncludeAttributes:
+                          items:
+                            properties:
+                              attribute:
+                                type: string
+                              value:
+                                type: string
+                            type: object
+                          type: array
+                        seSpawnRate:
+                          type: string
+                        seVolume:
+                          type: string
+                        servicesAccessibleAllInterfaces:
+                          type: string
+                        sshUserRef:
+                          type: string
+                        ucpNodes:
+                          items:
+                            type: string
+                          type: array
+                        useContainerIpPort:
+                          type: string
+                        useControllerImage:
+                          type: string
+                      type: object
+                    type: array
+                  eastWestDnsProviderRef:
+                    type: string
+                  eastWestIpamProviderRef:
+                    type: string
+                  enableVipOnAllInterfaces:
+                    type: string
+                  enableVipStaticRoutes:
+                    type: string
+                  gcpConfiguration:
+                    items:
+                      properties:
+                        cloudCredentialsRef:
+                          type: string
+                        encryptionKeys:
+                          items:
+                            properties:
+                              gcsBucketKmsKeyId:
+                                type: string
+                              gcsObjectsKmsKeyId:
+                                type: string
+                              seDiskKmsKeyId:
+                                type: string
+                              seImageKmsKeyId:
+                                type: string
+                            type: object
+                          type: array
+                        firewallTargetTags:
+                          items:
+                            type: string
+                          type: array
+                        gcpServiceAccountEmail:
+                          type: string
+                        gcsBucketName:
+                          type: string
+                        gcsProjectId:
+                          type: string
+                        networkConfig:
+                          items:
+                            properties:
+                              config:
+                                type: string
+                              inband:
+                                items:
+                                  properties:
+                                    vpcNetworkName:
+                                      type: string
+                                    vpcProjectId:
+                                      type: string
+                                    vpcSubnetName:
+                                      type: string
+                                  type: object
+                                type: array
+                              oneArm:
+                                items:
+                                  properties:
+                                    dataVpcNetworkName:
+                                      type: string
+                                    dataVpcProjectId:
+                                      type: string
+                                    dataVpcSubnetName:
+                                      type: string
+                                    managementVpcNetworkName:
+                                      type: string
+                                    managementVpcProjectId:
+                                      type: string
+                                    managementVpcSubnetName:
+                                      type: string
+                                  type: object
+                                type: array
+                              twoArm:
+                                items:
+                                  properties:
+                                    backendDataVpcNetworkName:
+                                      type: string
+                                    backendDataVpcProjectId:
+                                      type: string
+                                    backendDataVpcSubnetName:
+                                      type: string
+                                    frontendDataVpcNetworkName:
+                                      type: string
+                                    frontendDataVpcProjectId:
+                                      type: string
+                                    frontendDataVpcSubnetName:
+                                      type: string
+                                    managementVpcNetworkName:
+                                      type: string
+                                    managementVpcProjectId:
+                                      type: string
+                                    managementVpcSubnetName:
+                                      type: string
+                                  type: object
+                                type: array
+                            type: object
+                          type: array
+                        regionName:
+                          type: string
+                        seProjectId:
+                          type: string
+                        vipAllocationStrategy:
+                          items:
+                            properties:
+                              ilb:
+                                items:
+                                  properties:
+                                    cloudRouterNames:
+                                      items:
+                                        type: string
+                                      type: array
+                                  type: object
+                                type: array
+                              mode:
+                                type: string
+                              routes:
+                                items:
+                                  properties:
+                                    matchSeGroupSubnet:
+                                      type: string
+                                    routePriority:
+                                      type: string
+                                  type: object
+                                type: array
+                            type: object
+                          type: array
+                        zones:
+                          items:
+                            type: string
+                          type: array
+                      type: object
+                    type: array
+                  ip6AutocfgEnabled:
+                    type: string
+                  ipamProviderRef:
+                    type: string
+                  licenseTier:
+                    type: string
+                  licenseType:
+                    type: string
+                  linuxserverConfiguration:
+                    items:
+                      properties:
+                        hosts:
+                          items:
+                            properties:
+                              hostAttr:
+                                items:
+                                  properties:
+                                    attrKey:
+                                      type: string
+                                    attrVal:
+                                      type: string
+                                  type: object
+                                type: array
+                              hostIp:
+                                items:
+                                  properties:
+                                    addr:
+                                      type: string
+                                    type:
+                                      type: string
+                                  type: object
+                                type: array
+                              nodeAvailabilityZone:
+                                type: string
+                              seGroupRef:
+                                type: string
+                            type: object
+                          type: array
+                        seInbandMgmt:
+                          type: string
+                        seLogDiskPath:
+                          type: string
+                        seLogDiskSizeGb:
+                          type: string
+                        seSysDiskPath:
+                          type: string
+                        seSysDiskSizeGb:
+                          type: string
+                        sshUserRef:
+                          type: string
+                      type: object
+                    type: array
+                  maintenanceMode:
+                    type: string
+                  markers:
+                    items:
+                      properties:
+                        key:
+                          type: string
+                        values:
+                          items:
+                            type: string
+                          type: array
+                      type: object
+                    type: array
+                  metricsPollingInterval:
+                    type: string
+                  mtu:
+                    type: string
+                  name:
+                    type: string
+                  nsxtConfiguration:
+                    items:
+                      properties:
+                        automateDfwRules:
+                          type: string
+                        dataNetworkConfig:
+                          items:
+                            properties:
+                              tier1SegmentConfig:
+                                items:
+                                  properties:
+                                    automatic:
+                                      items:
+                                        properties:
+                                          nsxtSegmentSubnet:
+                                            items:
+                                              properties:
+                                                ipAddr:
+                                                  items:
+                                                    properties:
+                                                      addr:
+                                                        type: string
+                                                      type:
+                                                        type: string
+                                                    type: object
+                                                  type: array
+                                                mask:
+                                                  type: string
+                                              type: object
+                                            type: array
+                                          numSePerSegment:
+                                            type: string
+                                          tier1LrIds:
+                                            items:
+                                              type: string
+                                            type: array
+                                        type: object
+                                      type: array
+                                    manual:
+                                      items:
+                                        properties:
+                                          tier1Lrs:
+                                            items:
+                                              properties:
+                                                localeService:
+                                                  type: string
+                                                segmentId:
+                                                  type: string
+                                                tier1LrId:
+                                                  type: string
+                                              type: object
+                                            type: array
+                                        type: object
+                                      type: array
+                                    segmentConfigMode:
+                                      type: string
+                                  type: object
+                                type: array
+                              transportZone:
+                                type: string
+                              tzType:
+                                type: string
+                              vlanSegments:
+                                items:
+                                  type: string
+                                type: array
+                            type: object
+                          type: array
+                        domainId:
+                          type: string
+                        enforcementpointId:
+                          type: string
+                        managementNetworkConfig:
+                          items:
+                            properties:
+                              overlaySegment:
+                                items:
+                                  properties:
+                                    localeService:
+                                      type: string
+                                    segmentId:
+                                      type: string
+                                    tier1LrId:
+                                      type: string
+                                  type: object
+                                type: array
+                              transportZone:
+                                type: string
+                              tzType:
+                                type: string
+                              vlanSegment:
+                                type: string
+                            type: object
+                          type: array
+                        nsxtCredentialsRef:
+                          type: string
+                        nsxtUrl:
+                          type: string
+                        siteId:
+                          type: string
+                      type: object
+                    type: array
+                  ntpConfiguration:
+                    items:
+                      properties:
+                        ntpAuthenticationKeys:
+                          items:
+                            properties:
+                              algorithm:
+                                type: string
+                              key:
+                                type: string
+                              keyNumber:
+                                type: string
+                            type: object
+                          type: array
+                        ntpServerList:
+                          items:
+                            properties:
+                              addr:
+                                type: string
+                              type:
+                                type: string
+                            type: object
+                          type: array
+                        ntpServers:
+                          items:
+                            properties:
+                              keyNumber:
+                                type: string
+                              server:
+                                items:
+                                  properties:
+                                    addr:
+                                      type: string
+                                    type:
+                                      type: string
+                                  type: object
+                                type: array
+                            type: object
+                          type: array
+                      type: object
+                    type: array
+                  objNamePrefix:
+                    type: string
+                  openstackConfiguration:
+                    items:
+                      properties:
+                        adminTenant:
+                          type: string
+                        adminTenantUuid:
+                          type: string
+                        allowedAddressPairs:
+                          type: string
+                        antiAffinity:
+                          type: string
+                        authUrl:
+                          type: string
+                        configDrive:
+                          type: string
+                        contrailDisablePolicy:
+                          type: string
+                        contrailEndpoint:
+                          type: string
+                        contrailPlugin:
+                          type: string
+                        customSeImageProperties:
+                          items:
+                            properties:
+                              name:
+                                type: string
+                              value:
+                                type: string
+                            type: object
+                          type: array
+                        enableOsObjectCaching:
+                          type: string
+                        enableTagging:
+                          type: string
+                        externalNetworks:
+                          type: string
+                        freeFloatingips:
+                          type: string
+                        hypervisor:
+                          type: string
+                        hypervisorProperties:
+                          items:
+                            properties:
+                              hypervisor:
+                                type: string
+                              imageProperties:
+                                items:
+                                  properties:
+                                    name:
+                                      type: string
+                                    value:
+                                      type: string
+                                  type: object
+                                type: array
+                            type: object
+                          type: array
+                        imgFormat:
+                          type: string
+                        importKeystoneTenants:
+                          type: string
+                        insecure:
+                          type: string
+                        keystoneHost:
+                          type: string
+                        mapAdminToCloudadmin:
+                          type: string
+                        mgmtNetworkName:
+                          type: string
+                        mgmtNetworkUuid:
+                          type: string
+                        nameOwner:
+                          type: string
+                        neutronRbac:
+                          type: string
+                        privilege:
+                          type: string
+                        provName:
+                          items:
+                            type: string
+                          type: array
+                        providerVipNetworks:
+                          items:
+                            properties:
+                              osNetworkUuid:
+                                type: string
+                              osTenantUuids:
+                                items:
+                                  type: string
+                                type: array
+                            type: object
+                          type: array
+                        region:
+                          type: string
+                        roleMapping:
+                          items:
+                            properties:
+                              aviRole:
+                                type: string
+                              osRole:
+                                type: string
+                            type: object
+                          type: array
+                        securityGroups:
+                          type: string
+                        tenantSe:
+                          type: string
+                        useAdminUrl:
+                          type: string
+                        useInternalEndpoints:
+                          type: string
+                        useKeystoneAuth:
+                          type: string
+                        username:
+                          type: string
+                        vipPortInAdminTenant:
+                          type: string
+                      type: object
+                    type: array
+                  preferStaticRoutes:
+                    type: string
+                  proxyConfiguration:
+                    items:
+                      properties:
+                        host:
+                          type: string
+                        port:
+                          type: string
+                        username:
+                          type: string
+                      type: object
+                    type: array
+                  rancherConfiguration:
+                    items:
+                      properties:
+                        accessKey:
+                          type: string
+                        appSyncFrequency:
+                          type: string
+                        containerPortMatchHttpService:
+                          type: string
+                        coredumpDirectory:
+                          type: string
+                        disableAutoBackendServiceSync:
+                          type: string
+                        disableAutoFrontendServiceSync:
+                          type: string
+                        disableAutoSeCreation:
+                          type: string
+                        dockerRegistrySe:
+                          items:
+                            properties:
+                              oshiftRegistry:
+                                items:
+                                  properties:
+                                    registryNamespace:
+                                      type: string
+                                    registryService:
+                                      type: string
+                                    registryVip:
+                                      items:
+                                        properties:
+                                          addr:
+                                            type: string
+                                          type:
+                                            type: string
+                                        type: object
+                                      type: array
+                                  type: object
+                                type: array
+                              private:
+                                type: string
+                              registry:
+                                type: string
+                              username:
+                                type: string
+                            type: object
+                          type: array
+                        eastWestPlacementSubnet:
+                          items:
+                            properties:
+                              ipAddr:
+                                items:
+                                  properties:
+                                    addr:
+                                      type: string
+                                    type:
+                                      type: string
+                                  type: object
+                                type: array
+                              mask:
+                                type: string
+                            type: object
+                          type: array
+                        enableEventSubscription:
+                          type: string
+                        feproxyContainerPortAsService:
+                          type: string
+                        feproxyVipsEnableProxyArp:
+                          type: string
+                        fleetEndpoint:
+                          type: string
+                        httpContainerPorts:
+                          items:
+                            type: number
+                          type: array
+                        nuageController:
+                          items:
+                            properties:
+                              nuageOrganization:
+                                type: string
+                              nuagePort:
+                                type: string
+                              nuageUsername:
+                                type: string
+                              nuageVsdHost:
+                                type: string
+                              seDomain:
+                                type: string
+                              seEnterprise:
+                                type: string
+                              seNetwork:
+                                type: string
+                              sePolicyGroup:
+                                type: string
+                              seUser:
+                                type: string
+                              seZone:
+                                type: string
+                            type: object
+                          type: array
+                        rancherServers:
+                          items:
+                            type: string
+                          type: array
+                        seDeploymentMethod:
+                          type: string
+                        seExcludeAttributes:
+                          items:
+                            properties:
+                              attribute:
+                                type: string
+                              value:
+                                type: string
+                            type: object
+                          type: array
+                        seIncludeAttributes:
+                          items:
+                            properties:
+                              attribute:
+                                type: string
+                              value:
+                                type: string
+                            type: object
+                          type: array
+                        seSpawnRate:
+                          type: string
+                        seVolume:
+                          type: string
+                        servicesAccessibleAllInterfaces:
+                          type: string
+                        sshUserRef:
+                          type: string
+                        useContainerIpPort:
+                          type: string
+                        useControllerImage:
+                          type: string
+                      type: object
+                    type: array
+                  seGroupTemplateRef:
+                    type: string
+                  stateBasedDnsRegistration:
+                    type: string
+                  tenantRef:
+                    type: string
+                  uuid:
+                    type: string
+                  vcaConfiguration:
+                    items:
+                      properties:
+                        privilege:
+                          type: string
+                        vcaHost:
+                          type: string
+                        vcaInstance:
+                          type: string
+                        vcaMgmtNetwork:
+                          type: string
+                        vcaOrgnization:
+                          type: string
+                        vcaUsername:
+                          type: string
+                        vcaVdc:
+                          type: string
+                      type: object
+                    type: array
+                  vcenterConfiguration:
+                    items:
+                      properties:
+                        contentLib:
+                          items:
+                            properties:
+                              id:
+                                type: string
+                              name:
+                                type: string
+                            type: object
+                          type: array
+                        datacenter:
+                          type: string
+                        isNsxEnvironment:
+                          type: string
+                        managementIpSubnet:
+                          items:
+                            properties:
+                              ipAddr:
+                                items:
+                                  properties:
+                                    addr:
+                                      type: string
+                                    type:
+                                      type: string
+                                  type: object
+                                type: array
+                              mask:
+                                type: string
+                            type: object
+                          type: array
+                        managementNetwork:
+                          type: string
+                        privilege:
+                          type: string
+                        useContentLib:
+                          type: string
+                        username:
+                          type: string
+                        vcenterTemplateSeLocation:
+                          type: string
+                        vcenterUrl:
+                          type: string
+                      type: object
+                    type: array
+                  vmcDeployment:
+                    type: string
+                  vtype:
+                    type: string
+                type: object
+              managementPolicies:
+                default:
+                - '*'
+                description: 'THIS IS AN ALPHA FIELD. Do not use it in production.
+                  It is not honored unless the relevant Crossplane feature flag is
+                  enabled, and may be changed or removed without notice. ManagementPolicies
+                  specify the array of actions Crossplane is allowed to take on the
+                  managed and external resources. This field is planned to replace
+                  the DeletionPolicy field in a future release. Currently, both could
+                  be set independently and non-default values would be honored if
+                  the feature flag is enabled. If both are custom, the DeletionPolicy
+                  field will be ignored. See the design doc for more information:
+                  https://github.com/crossplane/crossplane/blob/499895a25d1a1a0ba1604944ef98ac7a1a71f197/design/design-doc-observe-only-resources.md?plain=1#L223
+                  and this one: https://github.com/crossplane/crossplane/blob/444267e84783136daa93568b364a5f01228cacbe/design/one-pager-ignore-changes.md'
+                items:
+                  description: A ManagementAction represents an action that the Crossplane
+                    controllers can take on an external resource.
+                  enum:
+                  - Observe
+                  - Create
+                  - Update
+                  - Delete
+                  - LateInitialize
+                  - '*'
+                  type: string
+                type: array
+              providerConfigRef:
+                default:
+                  name: default
+                description: ProviderConfigReference specifies how the provider that
+                  will be used to create, observe, update, and delete this managed
+                  resource should be configured.
+                properties:
+                  name:
+                    description: Name of the referenced object.
+                    type: string
+                  policy:
+                    description: Policies for referencing.
+                    properties:
+                      resolution:
+                        default: Required
+                        description: Resolution specifies whether resolution of this
+                          reference is required. The default is 'Required', which
+                          means the reconcile will fail if the reference cannot be
+                          resolved. 'Optional' means this reference will be a no-op
+                          if it cannot be resolved.
+                        enum:
+                        - Required
+                        - Optional
+                        type: string
+                      resolve:
+                        description: Resolve specifies when this reference should
+                          be resolved. The default is 'IfNotPresent', which will attempt
+                          to resolve the reference only when the corresponding field
+                          is not present. Use 'Always' to resolve the reference on
+                          every reconcile.
+                        enum:
+                        - Always
+                        - IfNotPresent
+                        type: string
+                    type: object
+                required:
+                - name
+                type: object
+              providerRef:
+                description: 'ProviderReference specifies the provider that will be
+                  used to create, observe, update, and delete this managed resource.
+                  Deprecated: Please use ProviderConfigReference, i.e. `providerConfigRef`'
+                properties:
+                  name:
+                    description: Name of the referenced object.
+                    type: string
+                  policy:
+                    description: Policies for referencing.
+                    properties:
+                      resolution:
+                        default: Required
+                        description: Resolution specifies whether resolution of this
+                          reference is required. The default is 'Required', which
+                          means the reconcile will fail if the reference cannot be
+                          resolved. 'Optional' means this reference will be a no-op
+                          if it cannot be resolved.
+                        enum:
+                        - Required
+                        - Optional
+                        type: string
+                      resolve:
+                        description: Resolve specifies when this reference should
+                          be resolved. The default is 'IfNotPresent', which will attempt
+                          to resolve the reference only when the corresponding field
+                          is not present. Use 'Always' to resolve the reference on
+                          every reconcile.
+                        enum:
+                        - Always
+                        - IfNotPresent
+                        type: string
+                    type: object
+                required:
+                - name
+                type: object
+              publishConnectionDetailsTo:
+                description: PublishConnectionDetailsTo specifies the connection secret
+                  config which contains a name, metadata and a reference to secret
+                  store config to which any connection details for this managed resource
+                  should be written. Connection details frequently include the endpoint,
+                  username, and password required to connect to the managed resource.
+                properties:
+                  configRef:
+                    default:
+                      name: default
+                    description: SecretStoreConfigRef specifies which secret store
+                      config should be used for this ConnectionSecret.
+                    properties:
+                      name:
+                        description: Name of the referenced object.
+                        type: string
+                      policy:
+                        description: Policies for referencing.
+                        properties:
+                          resolution:
+                            default: Required
+                            description: Resolution specifies whether resolution of
+                              this reference is required. The default is 'Required',
+                              which means the reconcile will fail if the reference
+                              cannot be resolved. 'Optional' means this reference
+                              will be a no-op if it cannot be resolved.
+                            enum:
+                            - Required
+                            - Optional
+                            type: string
+                          resolve:
+                            description: Resolve specifies when this reference should
+                              be resolved. The default is 'IfNotPresent', which will
+                              attempt to resolve the reference only when the corresponding
+                              field is not present. Use 'Always' to resolve the reference
+                              on every reconcile.
+                            enum:
+                            - Always
+                            - IfNotPresent
+                            type: string
+                        type: object
+                    required:
+                    - name
+                    type: object
+                  metadata:
+                    description: Metadata is the metadata for connection secret.
+                    properties:
+                      annotations:
+                        additionalProperties:
+                          type: string
+                        description: Annotations are the annotations to be added to
+                          connection secret. - For Kubernetes secrets, this will be
+                          used as "metadata.annotations". - It is up to Secret Store
+                          implementation for others store types.
+                        type: object
+                      labels:
+                        additionalProperties:
+                          type: string
+                        description: Labels are the labels/tags to be added to connection
+                          secret. - For Kubernetes secrets, this will be used as "metadata.labels".
+                          - It is up to Secret Store implementation for others store
+                          types.
+                        type: object
+                      type:
+                        description: Type is the SecretType for the connection secret.
+                          - Only valid for Kubernetes Secret Stores.
+                        type: string
+                    type: object
+                  name:
+                    description: Name is the name of the connection secret.
+                    type: string
+                required:
+                - name
+                type: object
+              writeConnectionSecretToRef:
+                description: WriteConnectionSecretToReference specifies the namespace
+                  and name of a Secret to which any connection details for this managed
+                  resource should be written. Connection details frequently include
+                  the endpoint, username, and password required to connect to the
+                  managed resource. This field is planned to be replaced in a future
+                  release in favor of PublishConnectionDetailsTo. Currently, both
+                  could be set independently and connection details would be published
+                  to both without affecting each other.
+                properties:
+                  name:
+                    description: Name of the secret.
+                    type: string
+                  namespace:
+                    description: Namespace of the secret.
+                    type: string
+                required:
+                - name
+                - namespace
+                type: object
+            required:
+            - forProvider
+            type: object
+            x-kubernetes-validations:
+            - message: name is a required parameter
+              rule: '!(''*'' in self.managementPolicies || ''Create'' in self.managementPolicies
+                || ''Update'' in self.managementPolicies) || has(self.forProvider.name)
+                || has(self.initProvider.name)'
+            - message: vtype is a required parameter
+              rule: '!(''*'' in self.managementPolicies || ''Create'' in self.managementPolicies
+                || ''Update'' in self.managementPolicies) || has(self.forProvider.vtype)
+                || has(self.initProvider.vtype)'
+          status:
+            description: CloudStatus defines the observed state of Cloud.
+            properties:
+              atProvider:
+                properties:
+                  autoscalePollingInterval:
+                    type: string
+                  awsConfiguration:
+                    items:
+                      properties:
+                        asgPollInterval:
+                          type: string
+                        ebsEncryption:
+                          items:
+                            properties:
+                              masterKey:
+                                type: string
+                              mode:
+                                type: string
+                            type: object
+                          type: array
+                        freeElasticips:
+                          type: string
+                        iamAssumeRole:
+                          type: string
+                        publishVipToPublicZone:
+                          type: string
+                        region:
+                          type: string
+                        route53Integration:
+                          type: string
+                        s3Encryption:
+                          items:
+                            properties:
+                              masterKey:
+                                type: string
+                              mode:
+                                type: string
+                            type: object
+                          type: array
+                        sqsEncryption:
+                          items:
+                            properties:
+                              masterKey:
+                                type: string
+                              mode:
+                                type: string
+                            type: object
+                          type: array
+                        ttl:
+                          type: string
+                        useIamRoles:
+                          type: string
+                        useSnsSqs:
+                          type: string
+                        vpc:
+                          type: string
+                        vpcId:
+                          type: string
+                        zones:
+                          items:
+                            properties:
+                              availabilityZone:
+                                type: string
+                              mgmtNetworkName:
+                                type: string
+                              mgmtNetworkUuid:
+                                type: string
+                            type: object
+                          type: array
+                      type: object
+                    type: array
+                  azureConfiguration:
+                    items:
+                      properties:
+                        availabilityZones:
+                          items:
+                            type: string
+                          type: array
+                        cloudCredentialsRef:
+                          type: string
+                        desId:
+                          type: string
+                        location:
+                          type: string
+                        networkInfo:
+                          items:
+                            properties:
+                              managementNetworkId:
+                                type: string
+                              seNetworkId:
+                                type: string
+                              virtualNetworkId:
+                                type: string
+                            type: object
+                          type: array
+                        resourceGroup:
+                          type: string
+                        subscriptionId:
+                          type: string
+                        useAzureDns:
+                          type: string
+                        useEnhancedHa:
+                          type: string
+                        useManagedDisks:
+                          type: string
+                        useStandardAlb:
+                          type: string
+                      type: object
+                    type: array
+                  cloudstackConfiguration:
+                    items:
+                      properties:
+                        apiUrl:
+                          type: string
+                        cntrPublicIp:
+                          type: string
+                        hypervisor:
+                          type: string
+                        mgmtNetworkName:
+                          type: string
+                        mgmtNetworkUuid:
+                          type: string
+                      type: object
+                    type: array
+                  configpbAttributes:
+                    items:
+                      properties:
+                        version:
+                          type: string
+                      type: object
+                    type: array
+                  customTags:
+                    items:
+                      properties:
+                        tagKey:
+                          type: string
+                        tagVal:
+                          type: string
+                      type: object
+                    type: array
+                  dhcpEnabled:
+                    type: string
+                  dnsProviderRef:
+                    type: string
+                  dnsResolutionOnSe:
+                    type: string
+                  dnsResolvers:
+                    items:
+                      properties:
+                        fixedTtl:
+                          type: string
+                        minTtl:
+                          type: string
+                        nameserverIps:
+                          items:
+                            properties:
+                              addr:
+                                type: string
+                              type:
+                                type: string
+                            type: object
+                          type: array
+                        resolverName:
+                          type: string
+                        useMgmt:
+                          type: string
+                      type: object
+                    type: array
+                  dockerConfiguration:
+                    items:
+                      properties:
+                        appSyncFrequency:
+                          type: string
+                        caTlsKeyAndCertificateRef:
+                          type: string
+                        clientTlsKeyAndCertificateRef:
+                          type: string
+                        containerPortMatchHttpService:
+                          type: string
+                        coredumpDirectory:
+                          type: string
+                        disableAutoBackendServiceSync:
+                          type: string
+                        disableAutoFrontendServiceSync:
+                          type: string
+                        disableAutoSeCreation:
+                          type: string
+                        dockerRegistrySe:
+                          items:
+                            properties:
+                              oshiftRegistry:
+                                items:
+                                  properties:
+                                    registryNamespace:
+                                      type: string
+                                    registryService:
+                                      type: string
+                                    registryVip:
+                                      items:
+                                        properties:
+                                          addr:
+                                            type: string
+                                          type:
+                                            type: string
+                                        type: object
+                                      type: array
+                                  type: object
+                                type: array
+                              private:
+                                type: string
+                              registry:
+                                type: string
+                              username:
+                                type: string
+                            type: object
+                          type: array
+                        eastWestPlacementSubnet:
+                          items:
+                            properties:
+                              ipAddr:
+                                items:
+                                  properties:
+                                    addr:
+                                      type: string
+                                    type:
+                                      type: string
+                                  type: object
+                                type: array
+                              mask:
+                                type: string
+                            type: object
+                          type: array
+                        enableEventSubscription:
+                          type: string
+                        feproxyContainerPortAsService:
+                          type: string
+                        feproxyVipsEnableProxyArp:
+                          type: string
+                        fleetEndpoint:
+                          type: string
+                        httpContainerPorts:
+                          items:
+                            type: number
+                          type: array
+                        seDeploymentMethod:
+                          type: string
+                        seExcludeAttributes:
+                          items:
+                            properties:
+                              attribute:
+                                type: string
+                              value:
+                                type: string
+                            type: object
+                          type: array
+                        seIncludeAttributes:
+                          items:
+                            properties:
+                              attribute:
+                                type: string
+                              value:
+                                type: string
+                            type: object
+                          type: array
+                        seSpawnRate:
+                          type: string
+                        seVolume:
+                          type: string
+                        servicesAccessibleAllInterfaces:
+                          type: string
+                        sshUserRef:
+                          type: string
+                        ucpNodes:
+                          items:
+                            type: string
+                          type: array
+                        useContainerIpPort:
+                          type: string
+                        useControllerImage:
+                          type: string
+                      type: object
+                    type: array
+                  eastWestDnsProviderRef:
+                    type: string
+                  eastWestIpamProviderRef:
+                    type: string
+                  enableVipOnAllInterfaces:
+                    type: string
+                  enableVipStaticRoutes:
+                    type: string
+                  gcpConfiguration:
+                    items:
+                      properties:
+                        cloudCredentialsRef:
+                          type: string
+                        encryptionKeys:
+                          items:
+                            properties:
+                              gcsBucketKmsKeyId:
+                                type: string
+                              gcsObjectsKmsKeyId:
+                                type: string
+                              seDiskKmsKeyId:
+                                type: string
+                              seImageKmsKeyId:
+                                type: string
+                            type: object
+                          type: array
+                        firewallTargetTags:
+                          items:
+                            type: string
+                          type: array
+                        gcpServiceAccountEmail:
+                          type: string
+                        gcsBucketName:
+                          type: string
+                        gcsProjectId:
+                          type: string
+                        networkConfig:
+                          items:
+                            properties:
+                              config:
+                                type: string
+                              inband:
+                                items:
+                                  properties:
+                                    vpcNetworkName:
+                                      type: string
+                                    vpcProjectId:
+                                      type: string
+                                    vpcSubnetName:
+                                      type: string
+                                  type: object
+                                type: array
+                              oneArm:
+                                items:
+                                  properties:
+                                    dataVpcNetworkName:
+                                      type: string
+                                    dataVpcProjectId:
+                                      type: string
+                                    dataVpcSubnetName:
+                                      type: string
+                                    managementVpcNetworkName:
+                                      type: string
+                                    managementVpcProjectId:
+                                      type: string
+                                    managementVpcSubnetName:
+                                      type: string
+                                  type: object
+                                type: array
+                              twoArm:
+                                items:
+                                  properties:
+                                    backendDataVpcNetworkName:
+                                      type: string
+                                    backendDataVpcProjectId:
+                                      type: string
+                                    backendDataVpcSubnetName:
+                                      type: string
+                                    frontendDataVpcNetworkName:
+                                      type: string
+                                    frontendDataVpcProjectId:
+                                      type: string
+                                    frontendDataVpcSubnetName:
+                                      type: string
+                                    managementVpcNetworkName:
+                                      type: string
+                                    managementVpcProjectId:
+                                      type: string
+                                    managementVpcSubnetName:
+                                      type: string
+                                  type: object
+                                type: array
+                            type: object
+                          type: array
+                        regionName:
+                          type: string
+                        seProjectId:
+                          type: string
+                        vipAllocationStrategy:
+                          items:
+                            properties:
+                              ilb:
+                                items:
+                                  properties:
+                                    cloudRouterNames:
+                                      items:
+                                        type: string
+                                      type: array
+                                  type: object
+                                type: array
+                              mode:
+                                type: string
+                              routes:
+                                items:
+                                  properties:
+                                    matchSeGroupSubnet:
+                                      type: string
+                                    routePriority:
+                                      type: string
+                                  type: object
+                                type: array
+                            type: object
+                          type: array
+                        zones:
+                          items:
+                            type: string
+                          type: array
+                      type: object
+                    type: array
+                  id:
+                    type: string
+                  ip6AutocfgEnabled:
+                    type: string
+                  ipamProviderRef:
+                    type: string
+                  licenseTier:
+                    type: string
+                  licenseType:
+                    type: string
+                  linuxserverConfiguration:
+                    items:
+                      properties:
+                        hosts:
+                          items:
+                            properties:
+                              hostAttr:
+                                items:
+                                  properties:
+                                    attrKey:
+                                      type: string
+                                    attrVal:
+                                      type: string
+                                  type: object
+                                type: array
+                              hostIp:
+                                items:
+                                  properties:
+                                    addr:
+                                      type: string
+                                    type:
+                                      type: string
+                                  type: object
+                                type: array
+                              nodeAvailabilityZone:
+                                type: string
+                              seGroupRef:
+                                type: string
+                            type: object
+                          type: array
+                        seInbandMgmt:
+                          type: string
+                        seLogDiskPath:
+                          type: string
+                        seLogDiskSizeGb:
+                          type: string
+                        seSysDiskPath:
+                          type: string
+                        seSysDiskSizeGb:
+                          type: string
+                        sshUserRef:
+                          type: string
+                      type: object
+                    type: array
+                  maintenanceMode:
+                    type: string
+                  markers:
+                    items:
+                      properties:
+                        key:
+                          type: string
+                        values:
+                          items:
+                            type: string
+                          type: array
+                      type: object
+                    type: array
+                  metricsPollingInterval:
+                    type: string
+                  mtu:
+                    type: string
+                  name:
+                    type: string
+                  nsxtConfiguration:
+                    items:
+                      properties:
+                        automateDfwRules:
+                          type: string
+                        dataNetworkConfig:
+                          items:
+                            properties:
+                              tier1SegmentConfig:
+                                items:
+                                  properties:
+                                    automatic:
+                                      items:
+                                        properties:
+                                          nsxtSegmentSubnet:
+                                            items:
+                                              properties:
+                                                ipAddr:
+                                                  items:
+                                                    properties:
+                                                      addr:
+                                                        type: string
+                                                      type:
+                                                        type: string
+                                                    type: object
+                                                  type: array
+                                                mask:
+                                                  type: string
+                                              type: object
+                                            type: array
+                                          numSePerSegment:
+                                            type: string
+                                          tier1LrIds:
+                                            items:
+                                              type: string
+                                            type: array
+                                        type: object
+                                      type: array
+                                    manual:
+                                      items:
+                                        properties:
+                                          tier1Lrs:
+                                            items:
+                                              properties:
+                                                localeService:
+                                                  type: string
+                                                segmentId:
+                                                  type: string
+                                                tier1LrId:
+                                                  type: string
+                                              type: object
+                                            type: array
+                                        type: object
+                                      type: array
+                                    segmentConfigMode:
+                                      type: string
+                                  type: object
+                                type: array
+                              transportZone:
+                                type: string
+                              tzType:
+                                type: string
+                              vlanSegments:
+                                items:
+                                  type: string
+                                type: array
+                            type: object
+                          type: array
+                        domainId:
+                          type: string
+                        enforcementpointId:
+                          type: string
+                        managementNetworkConfig:
+                          items:
+                            properties:
+                              overlaySegment:
+                                items:
+                                  properties:
+                                    localeService:
+                                      type: string
+                                    segmentId:
+                                      type: string
+                                    tier1LrId:
+                                      type: string
+                                  type: object
+                                type: array
+                              transportZone:
+                                type: string
+                              tzType:
+                                type: string
+                              vlanSegment:
+                                type: string
+                            type: object
+                          type: array
+                        nsxtCredentialsRef:
+                          type: string
+                        nsxtUrl:
+                          type: string
+                        siteId:
+                          type: string
+                      type: object
+                    type: array
+                  ntpConfiguration:
+                    items:
+                      properties:
+                        ntpAuthenticationKeys:
+                          items:
+                            properties:
+                              algorithm:
+                                type: string
+                              key:
+                                type: string
+                              keyNumber:
+                                type: string
+                            type: object
+                          type: array
+                        ntpServerList:
+                          items:
+                            properties:
+                              addr:
+                                type: string
+                              type:
+                                type: string
+                            type: object
+                          type: array
+                        ntpServers:
+                          items:
+                            properties:
+                              keyNumber:
+                                type: string
+                              server:
+                                items:
+                                  properties:
+                                    addr:
+                                      type: string
+                                    type:
+                                      type: string
+                                  type: object
+                                type: array
+                            type: object
+                          type: array
+                      type: object
+                    type: array
+                  objNamePrefix:
+                    type: string
+                  openstackConfiguration:
+                    items:
+                      properties:
+                        adminTenant:
+                          type: string
+                        adminTenantUuid:
+                          type: string
+                        allowedAddressPairs:
+                          type: string
+                        antiAffinity:
+                          type: string
+                        authUrl:
+                          type: string
+                        configDrive:
+                          type: string
+                        contrailDisablePolicy:
+                          type: string
+                        contrailEndpoint:
+                          type: string
+                        contrailPlugin:
+                          type: string
+                        customSeImageProperties:
+                          items:
+                            properties:
+                              name:
+                                type: string
+                              value:
+                                type: string
+                            type: object
+                          type: array
+                        enableOsObjectCaching:
+                          type: string
+                        enableTagging:
+                          type: string
+                        externalNetworks:
+                          type: string
+                        freeFloatingips:
+                          type: string
+                        hypervisor:
+                          type: string
+                        hypervisorProperties:
+                          items:
+                            properties:
+                              hypervisor:
+                                type: string
+                              imageProperties:
+                                items:
+                                  properties:
+                                    name:
+                                      type: string
+                                    value:
+                                      type: string
+                                  type: object
+                                type: array
+                            type: object
+                          type: array
+                        imgFormat:
+                          type: string
+                        importKeystoneTenants:
+                          type: string
+                        insecure:
+                          type: string
+                        keystoneHost:
+                          type: string
+                        mapAdminToCloudadmin:
+                          type: string
+                        mgmtNetworkName:
+                          type: string
+                        mgmtNetworkUuid:
+                          type: string
+                        nameOwner:
+                          type: string
+                        neutronRbac:
+                          type: string
+                        privilege:
+                          type: string
+                        provName:
+                          items:
+                            type: string
+                          type: array
+                        providerVipNetworks:
+                          items:
+                            properties:
+                              osNetworkUuid:
+                                type: string
+                              osTenantUuids:
+                                items:
+                                  type: string
+                                type: array
+                            type: object
+                          type: array
+                        region:
+                          type: string
+                        roleMapping:
+                          items:
+                            properties:
+                              aviRole:
+                                type: string
+                              osRole:
+                                type: string
+                            type: object
+                          type: array
+                        securityGroups:
+                          type: string
+                        tenantSe:
+                          type: string
+                        useAdminUrl:
+                          type: string
+                        useInternalEndpoints:
+                          type: string
+                        useKeystoneAuth:
+                          type: string
+                        username:
+                          type: string
+                        vipPortInAdminTenant:
+                          type: string
+                      type: object
+                    type: array
+                  preferStaticRoutes:
+                    type: string
+                  proxyConfiguration:
+                    items:
+                      properties:
+                        host:
+                          type: string
+                        port:
+                          type: string
+                        username:
+                          type: string
+                      type: object
+                    type: array
+                  rancherConfiguration:
+                    items:
+                      properties:
+                        accessKey:
+                          type: string
+                        appSyncFrequency:
+                          type: string
+                        containerPortMatchHttpService:
+                          type: string
+                        coredumpDirectory:
+                          type: string
+                        disableAutoBackendServiceSync:
+                          type: string
+                        disableAutoFrontendServiceSync:
+                          type: string
+                        disableAutoSeCreation:
+                          type: string
+                        dockerRegistrySe:
+                          items:
+                            properties:
+                              oshiftRegistry:
+                                items:
+                                  properties:
+                                    registryNamespace:
+                                      type: string
+                                    registryService:
+                                      type: string
+                                    registryVip:
+                                      items:
+                                        properties:
+                                          addr:
+                                            type: string
+                                          type:
+                                            type: string
+                                        type: object
+                                      type: array
+                                  type: object
+                                type: array
+                              private:
+                                type: string
+                              registry:
+                                type: string
+                              username:
+                                type: string
+                            type: object
+                          type: array
+                        eastWestPlacementSubnet:
+                          items:
+                            properties:
+                              ipAddr:
+                                items:
+                                  properties:
+                                    addr:
+                                      type: string
+                                    type:
+                                      type: string
+                                  type: object
+                                type: array
+                              mask:
+                                type: string
+                            type: object
+                          type: array
+                        enableEventSubscription:
+                          type: string
+                        feproxyContainerPortAsService:
+                          type: string
+                        feproxyVipsEnableProxyArp:
+                          type: string
+                        fleetEndpoint:
+                          type: string
+                        httpContainerPorts:
+                          items:
+                            type: number
+                          type: array
+                        nuageController:
+                          items:
+                            properties:
+                              nuageOrganization:
+                                type: string
+                              nuagePort:
+                                type: string
+                              nuageUsername:
+                                type: string
+                              nuageVsdHost:
+                                type: string
+                              seDomain:
+                                type: string
+                              seEnterprise:
+                                type: string
+                              seNetwork:
+                                type: string
+                              sePolicyGroup:
+                                type: string
+                              seUser:
+                                type: string
+                              seZone:
+                                type: string
+                            type: object
+                          type: array
+                        rancherServers:
+                          items:
+                            type: string
+                          type: array
+                        seDeploymentMethod:
+                          type: string
+                        seExcludeAttributes:
+                          items:
+                            properties:
+                              attribute:
+                                type: string
+                              value:
+                                type: string
+                            type: object
+                          type: array
+                        seIncludeAttributes:
+                          items:
+                            properties:
+                              attribute:
+                                type: string
+                              value:
+                                type: string
+                            type: object
+                          type: array
+                        seSpawnRate:
+                          type: string
+                        seVolume:
+                          type: string
+                        servicesAccessibleAllInterfaces:
+                          type: string
+                        sshUserRef:
+                          type: string
+                        useContainerIpPort:
+                          type: string
+                        useControllerImage:
+                          type: string
+                      type: object
+                    type: array
+                  seGroupTemplateRef:
+                    type: string
+                  stateBasedDnsRegistration:
+                    type: string
+                  tenantRef:
+                    type: string
+                  uuid:
+                    type: string
+                  vcaConfiguration:
+                    items:
+                      properties:
+                        privilege:
+                          type: string
+                        vcaHost:
+                          type: string
+                        vcaInstance:
+                          type: string
+                        vcaMgmtNetwork:
+                          type: string
+                        vcaOrgnization:
+                          type: string
+                        vcaUsername:
+                          type: string
+                        vcaVdc:
+                          type: string
+                      type: object
+                    type: array
+                  vcenterConfiguration:
+                    items:
+                      properties:
+                        contentLib:
+                          items:
+                            properties:
+                              id:
+                                type: string
+                              name:
+                                type: string
+                            type: object
+                          type: array
+                        datacenter:
+                          type: string
+                        isNsxEnvironment:
+                          type: string
+                        managementIpSubnet:
+                          items:
+                            properties:
+                              ipAddr:
+                                items:
+                                  properties:
+                                    addr:
+                                      type: string
+                                    type:
+                                      type: string
+                                  type: object
+                                type: array
+                              mask:
+                                type: string
+                            type: object
+                          type: array
+                        managementNetwork:
+                          type: string
+                        privilege:
+                          type: string
+                        useContentLib:
+                          type: string
+                        username:
+                          type: string
+                        vcenterTemplateSeLocation:
+                          type: string
+                        vcenterUrl:
+                          type: string
+                      type: object
+                    type: array
+                  vmcDeployment:
+                    type: string
+                  vtype:
+                    type: string
+                type: object
+              conditions:
+                description: Conditions of the resource.
+                items:
+                  description: A Condition that may apply to a resource.
+                  properties:
+                    lastTransitionTime:
+                      description: LastTransitionTime is the last time this condition
+                        transitioned from one status to another.
+                      format: date-time
+                      type: string
+                    message:
+                      description: A Message containing details about this condition's
+                        last transition from one status to another, if any.
+                      type: string
+                    reason:
+                      description: A Reason for this condition's last transition from
+                        one status to another.
+                      type: string
+                    status:
+                      description: Status of this condition; is it currently True,
+                        False, or Unknown?
+                      type: string
+                    type:
+                      description: Type of this condition. At most one of each condition
+                        type may apply to a resource at any point in time.
+                      type: string
+                  required:
+                  - lastTransitionTime
+                  - reason
+                  - status
+                  - type
+                  type: object
+                type: array
+            type: object
+        required:
+        - spec
+        type: object
+    served: true
+    storage: true
+    subresources:
+      status: {}

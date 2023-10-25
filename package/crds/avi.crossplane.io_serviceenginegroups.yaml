@@ -1,0 +1,3338 @@
+---
+apiVersion: apiextensions.k8s.io/v1
+kind: CustomResourceDefinition
+metadata:
+  annotations:
+    controller-gen.kubebuilder.io/version: v0.12.1
+  name: serviceenginegroups.avi.crossplane.io
+spec:
+  group: avi.crossplane.io
+  names:
+    categories:
+    - crossplane
+    - managed
+    - avi
+    kind: ServiceEngineGroup
+    listKind: ServiceEngineGroupList
+    plural: serviceenginegroups
+    singular: serviceenginegroup
+  scope: Cluster
+  versions:
+  - additionalPrinterColumns:
+    - jsonPath: .status.conditions[?(@.type=='Ready')].status
+      name: READY
+      type: string
+    - jsonPath: .status.conditions[?(@.type=='Synced')].status
+      name: SYNCED
+      type: string
+    - jsonPath: .metadata.annotations.crossplane\.io/external-name
+      name: EXTERNAL-NAME
+      type: string
+    - jsonPath: .metadata.creationTimestamp
+      name: AGE
+      type: date
+    name: v1alpha1
+    schema:
+      openAPIV3Schema:
+        description: ServiceEngineGroup is the Schema for the ServiceEngineGroups
+          API. <no value>
+        properties:
+          apiVersion:
+            description: 'APIVersion defines the versioned schema of this representation
+              of an object. Servers should convert recognized schemas to the latest
+              internal value, and may reject unrecognized values. More info: https://git.k8s.io/community/contributors/devel/sig-architecture/api-conventions.md#resources'
+            type: string
+          kind:
+            description: 'Kind is a string value representing the REST resource this
+              object represents. Servers may infer this from the endpoint the client
+              submits requests to. Cannot be updated. In CamelCase. More info: https://git.k8s.io/community/contributors/devel/sig-architecture/api-conventions.md#types-kinds'
+            type: string
+          metadata:
+            type: object
+          spec:
+            description: ServiceEngineGroupSpec defines the desired state of ServiceEngineGroup
+            properties:
+              deletionPolicy:
+                default: Delete
+                description: 'DeletionPolicy specifies what will happen to the underlying
+                  external when this managed resource is deleted - either "Delete"
+                  or "Orphan" the external resource. This field is planned to be deprecated
+                  in favor of the ManagementPolicies field in a future release. Currently,
+                  both could be set independently and non-default values would be
+                  honored if the feature flag is enabled. See the design doc for more
+                  information: https://github.com/crossplane/crossplane/blob/499895a25d1a1a0ba1604944ef98ac7a1a71f197/design/design-doc-observe-only-resources.md?plain=1#L223'
+                enum:
+                - Orphan
+                - Delete
+                type: string
+              forProvider:
+                properties:
+                  acceleratedNetworking:
+                    type: string
+                  activeStandby:
+                    type: string
+                  aggressiveFailureDetection:
+                    type: string
+                  algo:
+                    type: string
+                  allowBurst:
+                    type: string
+                  appCachePercent:
+                    type: string
+                  appCacheThreshold:
+                    type: string
+                  appLearningMemoryPercent:
+                    type: string
+                  archiveShmLimit:
+                    type: string
+                  asyncSsl:
+                    type: string
+                  asyncSslThreads:
+                    type: string
+                  autoRebalance:
+                    type: string
+                  autoRebalanceCapacityPerSe:
+                    items:
+                      type: number
+                    type: array
+                  autoRebalanceCriteria:
+                    items:
+                      type: string
+                    type: array
+                  autoRebalanceInterval:
+                    type: string
+                  autoRedistributeActiveStandbyLoad:
+                    type: string
+                  availabilityZoneRefs:
+                    items:
+                      type: string
+                    type: array
+                  baremetalDispatcherHandlesFlows:
+                    type: string
+                  bgpPeerMonitorFailoverEnabled:
+                    type: string
+                  bgpStateUpdateInterval:
+                    type: string
+                  bufferSe:
+                    type: string
+                  cloudRef:
+                    type: string
+                  compressIpRulesForEachNsSubnet:
+                    type: string
+                  configDebugsOnAllCores:
+                    type: string
+                  configpbAttributes:
+                    items:
+                      properties:
+                        version:
+                          type: string
+                      type: object
+                    type: array
+                  connectionMemoryPercentage:
+                    type: string
+                  coreShmAppCache:
+                    type: string
+                  coreShmAppLearning:
+                    type: string
+                  cpuReserve:
+                    type: string
+                  cpuSocketAffinity:
+                    type: string
+                  customSecuritygroupsData:
+                    items:
+                      type: string
+                    type: array
+                  customSecuritygroupsMgmt:
+                    items:
+                      type: string
+                    type: array
+                  customTag:
+                    items:
+                      properties:
+                        tagKey:
+                          type: string
+                        tagVal:
+                          type: string
+                      type: object
+                    type: array
+                  dataNetworkId:
+                    type: string
+                  datascriptTimeout:
+                    type: string
+                  deactivateIpv6Discovery:
+                    type: string
+                  deactivateKniFilteringAtDispatcher:
+                    type: string
+                  dedicatedDispatcherCore:
+                    type: string
+                  description:
+                    type: string
+                  disableAviSecuritygroups:
+                    type: string
+                  disableCsumOffloads:
+                    type: string
+                  disableFlowProbes:
+                    type: string
+                  disableGro:
+                    type: string
+                  disableSeMemoryCheck:
+                    type: string
+                  disableTso:
+                    type: string
+                  diskPerSe:
+                    type: string
+                  distributeLoadActiveStandby:
+                    type: string
+                  distributeQueues:
+                    type: string
+                  distributeVnics:
+                    type: string
+                  downstreamSendTimeout:
+                    type: string
+                  dpAggressiveDeqIntervalMsec:
+                    type: string
+                  dpAggressiveEnqIntervalMsec:
+                    type: string
+                  dpAggressiveHbFrequency:
+                    type: string
+                  dpAggressiveHbTimeoutCount:
+                    type: string
+                  dpDeqIntervalMsec:
+                    type: string
+                  dpEnqIntervalMsec:
+                    type: string
+                  dpHbFrequency:
+                    type: string
+                  dpHbTimeoutCount:
+                    type: string
+                  dpdkGroTimeoutInterval:
+                    type: string
+                  enableGratarpPermanent:
+                    type: string
+                  enableHsmLog:
+                    type: string
+                  enableHsmPriming:
+                    type: string
+                  enableMultiLb:
+                    type: string
+                  enablePcapTxRing:
+                    type: string
+                  ephemeralPortrangeEnd:
+                    type: string
+                  ephemeralPortrangeStart:
+                    type: string
+                  extraConfigMultiplier:
+                    type: string
+                  extraSharedConfigMemory:
+                    type: string
+                  flowTableNewSynMaxEntries:
+                    type: string
+                  freeListSize:
+                    type: string
+                  gcpConfig:
+                    items:
+                      properties:
+                        backendDataVpcNetworkName:
+                          type: string
+                        backendDataVpcProjectId:
+                          type: string
+                        backendDataVpcSubnetName:
+                          type: string
+                      type: object
+                    type: array
+                  gratarpPermanentPeriodicity:
+                    type: string
+                  grpcChannelConnectTimeout:
+                    type: string
+                  haMode:
+                    type: string
+                  handlePerPktAttack:
+                    type: string
+                  hardwaresecuritymodulegroupRef:
+                    type: string
+                  heapMinimumConfigMemory:
+                    type: string
+                  hmOnStandby:
+                    type: string
+                  hostAttributeKey:
+                    type: string
+                  hostAttributeValue:
+                    type: string
+                  hostGatewayMonitor:
+                    type: string
+                  httpRumConsoleLog:
+                    type: string
+                  httpRumMinContentLength:
+                    type: string
+                  hybridRssMode:
+                    type: string
+                  hypervisor:
+                    type: string
+                  ignoreDockerMacChange:
+                    type: string
+                  ignoreRttThreshold:
+                    type: string
+                  ingressAccessData:
+                    type: string
+                  ingressAccessMgmt:
+                    type: string
+                  instanceFlavor:
+                    type: string
+                  instanceFlavorInfo:
+                    items:
+                      properties:
+                        cost:
+                          type: string
+                        diskGb:
+                          type: string
+                        enhancedNw:
+                          type: string
+                        id:
+                          type: string
+                        isRecommended:
+                          type: string
+                        maxIp6SPerNic:
+                          type: string
+                        maxIpsPerNic:
+                          type: string
+                        maxNics:
+                          type: string
+                        meta:
+                          items:
+                            properties:
+                              key:
+                                type: string
+                              value:
+                                type: string
+                            type: object
+                          type: array
+                        name:
+                          type: string
+                        public:
+                          type: string
+                        ramMb:
+                          type: string
+                        vcpus:
+                          type: string
+                      type: object
+                    type: array
+                  iptables:
+                    items:
+                      properties:
+                        chain:
+                          type: string
+                        rules:
+                          items:
+                            properties:
+                              action:
+                                type: string
+                              dnatIp:
+                                items:
+                                  properties:
+                                    addr:
+                                      type: string
+                                    type:
+                                      type: string
+                                  type: object
+                                type: array
+                              dstIp:
+                                items:
+                                  properties:
+                                    ipAddr:
+                                      items:
+                                        properties:
+                                          addr:
+                                            type: string
+                                          type:
+                                            type: string
+                                        type: object
+                                      type: array
+                                    mask:
+                                      type: string
+                                  type: object
+                                type: array
+                              dstPort:
+                                items:
+                                  properties:
+                                    end:
+                                      type: string
+                                    start:
+                                      type: string
+                                  type: object
+                                type: array
+                              inputInterface:
+                                type: string
+                              outputInterface:
+                                type: string
+                              proto:
+                                type: string
+                              srcIp:
+                                items:
+                                  properties:
+                                    ipAddr:
+                                      items:
+                                        properties:
+                                          addr:
+                                            type: string
+                                          type:
+                                            type: string
+                                        type: object
+                                      type: array
+                                    mask:
+                                      type: string
+                                  type: object
+                                type: array
+                              srcPort:
+                                items:
+                                  properties:
+                                    end:
+                                      type: string
+                                    start:
+                                      type: string
+                                  type: object
+                                type: array
+                              tag:
+                                type: string
+                            type: object
+                          type: array
+                        table:
+                          type: string
+                      type: object
+                    type: array
+                  kniAllowedServerPorts:
+                    items:
+                      properties:
+                        protocol:
+                          type: string
+                        range:
+                          items:
+                            properties:
+                              end:
+                                type: string
+                              start:
+                                type: string
+                            type: object
+                          type: array
+                      type: object
+                    type: array
+                  l7ConnsPerCore:
+                    type: string
+                  l7ResvdListenConnsPerCore:
+                    type: string
+                  labels:
+                    items:
+                      properties:
+                        key:
+                          type: string
+                        value:
+                          type: string
+                      type: object
+                    type: array
+                  lbactionNumRequestsToDispatch:
+                    type: string
+                  lbactionRqPerRequestMaxRetries:
+                    type: string
+                  leastLoadCoreSelection:
+                    type: string
+                  licenseTier:
+                    type: string
+                  licenseType:
+                    type: string
+                  logAgentCompressLogs:
+                    type: string
+                  logAgentDebugEnabled:
+                    type: string
+                  logAgentFileSzAppl:
+                    type: string
+                  logAgentFileSzConn:
+                    type: string
+                  logAgentFileSzDebug:
+                    type: string
+                  logAgentFileSzEvent:
+                    type: string
+                  logAgentLogStorageMinSz:
+                    type: string
+                  logAgentMaxConcurrentRsync:
+                    type: string
+                  logAgentMaxStorageExcessPercent:
+                    type: string
+                  logAgentMaxStorageIgnorePercent:
+                    type: string
+                  logAgentMinStoragePerVs:
+                    type: string
+                  logAgentSleepInterval:
+                    type: string
+                  logAgentTraceEnabled:
+                    type: string
+                  logAgentUnknownVsTimer:
+                    type: string
+                  logDisksz:
+                    type: string
+                  logMallocFailure:
+                    type: string
+                  logMessageMaxFileListSize:
+                    type: string
+                  markers:
+                    items:
+                      properties:
+                        key:
+                          type: string
+                        values:
+                          items:
+                            type: string
+                          type: array
+                      type: object
+                    type: array
+                  maxConcurrentExternalHm:
+                    type: string
+                  maxCpuUsage:
+                    type: string
+                  maxMemoryPerMempool:
+                    type: string
+                  maxNumSeDps:
+                    type: string
+                  maxPublicIpsPerLb:
+                    type: string
+                  maxQueuesPerVnic:
+                    type: string
+                  maxRulesPerLb:
+                    type: string
+                  maxScaleoutPerVs:
+                    type: string
+                  maxSe:
+                    type: string
+                  maxSkbFrags:
+                    type: string
+                  maxVsPerSe:
+                    type: string
+                  memReserve:
+                    type: string
+                  memoryForConfigUpdate:
+                    type: string
+                  memoryPerSe:
+                    type: string
+                  mgmtNetworkRef:
+                    type: string
+                  mgmtSubnet:
+                    items:
+                      properties:
+                        ipAddr:
+                          items:
+                            properties:
+                              addr:
+                                type: string
+                              type:
+                                type: string
+                            type: object
+                          type: array
+                        mask:
+                          type: string
+                      type: object
+                    type: array
+                  minCpuUsage:
+                    type: string
+                  minScaleoutPerVs:
+                    type: string
+                  minSe:
+                    type: string
+                  minimumConnectionMemory:
+                    type: string
+                  nLogStreamingThreads:
+                    type: string
+                  name:
+                    type: string
+                  netlinkPollerThreads:
+                    type: string
+                  netlinkSockBufSize:
+                    type: string
+                  ngxFreeConnectionStack:
+                    type: string
+                  nonSignificantLogThrottle:
+                    type: string
+                  nsHelperDeqIntervalMsec:
+                    type: string
+                  ntpSyncFailEvent:
+                    type: string
+                  ntpSyncStatusInterval:
+                    type: string
+                  numDispatcherCores:
+                    type: string
+                  numDispatcherQueues:
+                    type: string
+                  numFlowCoresSumChangesToIgnore:
+                    type: string
+                  objsyncConfig:
+                    items:
+                      properties:
+                        objsyncCpuLimit:
+                          type: string
+                        objsyncHubElectInterval:
+                          type: string
+                        objsyncReconcileInterval:
+                          type: string
+                      type: object
+                    type: array
+                  objsyncPort:
+                    type: string
+                  openstackAvailabilityZones:
+                    items:
+                      type: string
+                    type: array
+                  openstackMgmtNetworkName:
+                    type: string
+                  openstackMgmtNetworkUuid:
+                    type: string
+                  osReservedMemory:
+                    type: string
+                  pcapTxMode:
+                    type: string
+                  pcapTxRingRdBalancingFactor:
+                    type: string
+                  perApp:
+                    type: string
+                  perVsAdmissionControl:
+                    type: string
+                  placementMode:
+                    type: string
+                  realtimeSeMetrics:
+                    items:
+                      properties:
+                        duration:
+                          type: string
+                        enabled:
+                          type: string
+                      type: object
+                    type: array
+                  rebootOnPanic:
+                    type: string
+                  replayVrfRoutesInterval:
+                    type: string
+                  resyncTimeInterval:
+                    type: string
+                  sdbFlushInterval:
+                    type: string
+                  sdbPipelineSize:
+                    type: string
+                  sdbScanCount:
+                    type: string
+                  seBandwidthType:
+                    type: string
+                  seDelayedFlowDelete:
+                    type: string
+                  seDeprovisionDelay:
+                    type: string
+                  seDosProfile:
+                    items:
+                      properties:
+                        threshInfo:
+                          items:
+                            properties:
+                              attack:
+                                type: string
+                              maxValue:
+                                type: string
+                              minValue:
+                                type: string
+                            type: object
+                          type: array
+                        threshPeriod:
+                          type: string
+                      type: object
+                    type: array
+                  seDpHmDrops:
+                    type: string
+                  seDpIfStatePollInterval:
+                    type: string
+                  seDpIsolation:
+                    type: string
+                  seDpIsolationNumNonDpCpus:
+                    type: string
+                  seDpLogNfEnqueuePercent:
+                    type: string
+                  seDpLogUdfEnqueuePercent:
+                    type: string
+                  seDpMaxHbVersion:
+                    type: string
+                  seDpVnicQueueStallEventSleep:
+                    type: string
+                  seDpVnicQueueStallThreshold:
+                    type: string
+                  seDpVnicQueueStallTimeout:
+                    type: string
+                  seDpVnicRestartOnQueueStallCount:
+                    type: string
+                  seDpVnicStallSeRestartWindow:
+                    type: string
+                  seDpdkPmd:
+                    type: string
+                  seDumpCoreOnAssert:
+                    type: string
+                  seEmulatedCores:
+                    type: string
+                  seFlowProbeRetries:
+                    type: string
+                  seFlowProbeRetryTimer:
+                    type: string
+                  seGroupAnalyticsPolicy:
+                    items:
+                      properties:
+                        metricsEventThresholds:
+                          items:
+                            properties:
+                              metricsEventThresholdType:
+                                type: string
+                              resetThreshold:
+                                type: string
+                              watermarkThresholds:
+                                items:
+                                  type: number
+                                type: array
+                            type: object
+                          type: array
+                      type: object
+                    type: array
+                  seHyperthreadedMode:
+                    type: string
+                  seIpEncapIpc:
+                    type: string
+                  seKniBurstFactor:
+                    type: string
+                  seL3EncapIpc:
+                    type: string
+                  seLogBufferAppBlockingDequeue:
+                    type: string
+                  seLogBufferConnBlockingDequeue:
+                    type: string
+                  seLogBufferEventsBlockingDequeue:
+                    type: string
+                  seLro:
+                    type: string
+                  seMpRingRetryCount:
+                    type: string
+                  seMtu:
+                    type: string
+                  seNamePrefix:
+                    type: string
+                  sePacketBufferMax:
+                    type: string
+                  sePcapLookahead:
+                    type: string
+                  sePcapPktCount:
+                    type: string
+                  sePcapPktSz:
+                    type: string
+                  sePcapQdiscBypass:
+                    type: string
+                  sePcapReinitFrequency:
+                    type: string
+                  sePcapReinitThreshold:
+                    type: string
+                  seProbePort:
+                    type: string
+                  seRlProp:
+                    items:
+                      properties:
+                        msfNumStages:
+                          type: string
+                        msfStageSize:
+                          type: string
+                      type: object
+                    type: array
+                  seRumSamplingNavInterval:
+                    type: string
+                  seRumSamplingNavPercent:
+                    type: string
+                  seRumSamplingResInterval:
+                    type: string
+                  seRumSamplingResPercent:
+                    type: string
+                  seSbDedicatedCore:
+                    type: string
+                  seSbThreads:
+                    type: string
+                  seThreadMultiplier:
+                    type: string
+                  seTimeTrackerProps:
+                    items:
+                      properties:
+                        egressAuditMode:
+                          type: string
+                        egressThreshold:
+                          type: string
+                        eventGenWindow:
+                          type: string
+                        ingressAuditMode:
+                          type: string
+                        ingressThreshold:
+                          type: string
+                      type: object
+                    type: array
+                  seTracertPortRange:
+                    items:
+                      properties:
+                        end:
+                          type: string
+                        start:
+                          type: string
+                      type: object
+                    type: array
+                  seTunnelMode:
+                    type: string
+                  seTunnelUdpPort:
+                    type: string
+                  seTxBatchSize:
+                    type: string
+                  seTxqThreshold:
+                    type: string
+                  seUdpEncapIpc:
+                    type: string
+                  seUseDpdk:
+                    type: string
+                  seVnicTxSwQueueFlushFrequency:
+                    type: string
+                  seVnicTxSwQueueSize:
+                    type: string
+                  seVsHbMaxPktsInBatch:
+                    type: string
+                  seVsHbMaxVsInPkt:
+                    type: string
+                  selfSeElection:
+                    type: string
+                  sendSeReadyTimeout:
+                    type: string
+                  serviceIp6Subnets:
+                    items:
+                      properties:
+                        ipAddr:
+                          items:
+                            properties:
+                              addr:
+                                type: string
+                              type:
+                                type: string
+                            type: object
+                          type: array
+                        mask:
+                          type: string
+                      type: object
+                    type: array
+                  serviceIpSubnets:
+                    items:
+                      properties:
+                        ipAddr:
+                          items:
+                            properties:
+                              addr:
+                                type: string
+                              type:
+                                type: string
+                            type: object
+                          type: array
+                        mask:
+                          type: string
+                      type: object
+                    type: array
+                  shmMinimumConfigMemory:
+                    type: string
+                  significantLogThrottle:
+                    type: string
+                  sslPreprocessSniHostname:
+                    type: string
+                  sslSessCachePerVs:
+                    type: string
+                  tenantRef:
+                    type: string
+                  transientSharedMemoryMax:
+                    type: string
+                  udfLogThrottle:
+                    type: string
+                  upstreamConnectTimeout:
+                    type: string
+                  upstreamConnpoolEnable:
+                    type: string
+                  upstreamReadTimeout:
+                    type: string
+                  upstreamSendTimeout:
+                    type: string
+                  useDpUtilForScaleout:
+                    type: string
+                  useHyperthreadedCores:
+                    type: string
+                  useLegacyNetlink:
+                    type: string
+                  useObjsync:
+                    type: string
+                  useStandardAlb:
+                    type: string
+                  userAgentCacheConfig:
+                    items:
+                      properties:
+                        batchSize:
+                          type: string
+                        controllerCacheSize:
+                          type: string
+                        maxAge:
+                          type: string
+                        maxLastHitTime:
+                          type: string
+                        maxUpstreamQueries:
+                          type: string
+                        maxWaitTime:
+                          type: string
+                        numEntriesUpstreamUpdate:
+                          type: string
+                        percentReservedForBadBots:
+                          type: string
+                        percentReservedForBrowsers:
+                          type: string
+                        percentReservedForGoodBots:
+                          type: string
+                        percentReservedForOutstanding:
+                          type: string
+                        seCacheSize:
+                          type: string
+                        upstreamUpdateInterval:
+                          type: string
+                      type: object
+                    type: array
+                  userDefinedMetricAge:
+                    type: string
+                  uuid:
+                    type: string
+                  vcenterClusters:
+                    items:
+                      properties:
+                        clusterRefs:
+                          items:
+                            type: string
+                          type: array
+                        include:
+                          type: string
+                      type: object
+                    type: array
+                  vcenterDatastoreMode:
+                    type: string
+                  vcenterDatastores:
+                    items:
+                      properties:
+                        datastoreName:
+                          type: string
+                        managedObjectId:
+                          type: string
+                      type: object
+                    type: array
+                  vcenterDatastoresInclude:
+                    type: string
+                  vcenterFolder:
+                    type: string
+                  vcenterHosts:
+                    items:
+                      properties:
+                        hostRefs:
+                          items:
+                            type: string
+                          type: array
+                        include:
+                          type: string
+                      type: object
+                    type: array
+                  vcenterParkingVnicPg:
+                    type: string
+                  vcenters:
+                    items:
+                      properties:
+                        clusters:
+                          items:
+                            properties:
+                              clusterId:
+                                type: string
+                              overrideVsphereHa:
+                                type: string
+                              vmgName:
+                                type: string
+                            type: object
+                          type: array
+                        nsxtClusters:
+                          items:
+                            properties:
+                              clusterIds:
+                                items:
+                                  type: string
+                                type: array
+                              include:
+                                type: string
+                            type: object
+                          type: array
+                        nsxtDatastores:
+                          items:
+                            properties:
+                              dsIds:
+                                items:
+                                  type: string
+                                type: array
+                              include:
+                                type: string
+                            type: object
+                          type: array
+                        nsxtHosts:
+                          items:
+                            properties:
+                              hostIds:
+                                items:
+                                  type: string
+                                type: array
+                              include:
+                                type: string
+                            type: object
+                          type: array
+                        vcenterFolder:
+                          type: string
+                        vcenterRef:
+                          type: string
+                      type: object
+                    type: array
+                  vcpusPerSe:
+                    type: string
+                  vipAsg:
+                    items:
+                      properties:
+                        configuration:
+                          items:
+                            properties:
+                              zones:
+                                items:
+                                  properties:
+                                    availabilityZone:
+                                      type: string
+                                    fipCapable:
+                                      type: string
+                                    subnetUuid:
+                                      type: string
+                                  type: object
+                                type: array
+                            type: object
+                          type: array
+                        policy:
+                          items:
+                            properties:
+                              dnsCooldown:
+                                type: string
+                              maxSize:
+                                type: string
+                              minSize:
+                                type: string
+                              suspend:
+                                type: string
+                            type: object
+                          type: array
+                      type: object
+                    type: array
+                  vnicDhcpIpCheckInterval:
+                    type: string
+                  vnicDhcpIpMaxRetries:
+                    type: string
+                  vnicIpDeleteInterval:
+                    type: string
+                  vnicProbeInterval:
+                    type: string
+                  vnicRpcRetryInterval:
+                    type: string
+                  vnicdbCmdHistorySize:
+                    type: string
+                  vsHostRedundancy:
+                    type: string
+                  vsScaleinTimeout:
+                    type: string
+                  vsScaleinTimeoutForUpgrade:
+                    type: string
+                  vsScaleoutTimeout:
+                    type: string
+                  vsSeScaleoutAdditionalWaitTime:
+                    type: string
+                  vsSeScaleoutReadyTimeout:
+                    type: string
+                  vsSwitchoverTimeout:
+                    type: string
+                  vssPlacement:
+                    items:
+                      properties:
+                        coreNonaffinity:
+                          type: string
+                        numSubcores:
+                          type: string
+                      type: object
+                    type: array
+                  vssPlacementEnabled:
+                    type: string
+                  wafMempool:
+                    type: string
+                  wafMempoolSize:
+                    type: string
+                type: object
+              initProvider:
+                description: THIS IS AN ALPHA FIELD. Do not use it in production.
+                  It is not honored unless the relevant Crossplane feature flag is
+                  enabled, and may be changed or removed without notice. InitProvider
+                  holds the same fields as ForProvider, with the exception of Identifier
+                  and other resource reference fields. The fields that are in InitProvider
+                  are merged into ForProvider when the resource is created. The same
+                  fields are also added to the terraform ignore_changes hook, to avoid
+                  updating them after creation. This is useful for fields that are
+                  required on creation, but we do not desire to update them after
+                  creation, for example because of an external controller is managing
+                  them, like an autoscaler.
+                properties:
+                  acceleratedNetworking:
+                    type: string
+                  activeStandby:
+                    type: string
+                  aggressiveFailureDetection:
+                    type: string
+                  algo:
+                    type: string
+                  allowBurst:
+                    type: string
+                  appCachePercent:
+                    type: string
+                  appCacheThreshold:
+                    type: string
+                  appLearningMemoryPercent:
+                    type: string
+                  archiveShmLimit:
+                    type: string
+                  asyncSsl:
+                    type: string
+                  asyncSslThreads:
+                    type: string
+                  autoRebalance:
+                    type: string
+                  autoRebalanceCapacityPerSe:
+                    items:
+                      type: number
+                    type: array
+                  autoRebalanceCriteria:
+                    items:
+                      type: string
+                    type: array
+                  autoRebalanceInterval:
+                    type: string
+                  autoRedistributeActiveStandbyLoad:
+                    type: string
+                  availabilityZoneRefs:
+                    items:
+                      type: string
+                    type: array
+                  baremetalDispatcherHandlesFlows:
+                    type: string
+                  bgpPeerMonitorFailoverEnabled:
+                    type: string
+                  bgpStateUpdateInterval:
+                    type: string
+                  bufferSe:
+                    type: string
+                  cloudRef:
+                    type: string
+                  compressIpRulesForEachNsSubnet:
+                    type: string
+                  configDebugsOnAllCores:
+                    type: string
+                  configpbAttributes:
+                    items:
+                      properties:
+                        version:
+                          type: string
+                      type: object
+                    type: array
+                  connectionMemoryPercentage:
+                    type: string
+                  coreShmAppCache:
+                    type: string
+                  coreShmAppLearning:
+                    type: string
+                  cpuReserve:
+                    type: string
+                  cpuSocketAffinity:
+                    type: string
+                  customSecuritygroupsData:
+                    items:
+                      type: string
+                    type: array
+                  customSecuritygroupsMgmt:
+                    items:
+                      type: string
+                    type: array
+                  customTag:
+                    items:
+                      properties:
+                        tagKey:
+                          type: string
+                        tagVal:
+                          type: string
+                      type: object
+                    type: array
+                  dataNetworkId:
+                    type: string
+                  datascriptTimeout:
+                    type: string
+                  deactivateIpv6Discovery:
+                    type: string
+                  deactivateKniFilteringAtDispatcher:
+                    type: string
+                  dedicatedDispatcherCore:
+                    type: string
+                  description:
+                    type: string
+                  disableAviSecuritygroups:
+                    type: string
+                  disableCsumOffloads:
+                    type: string
+                  disableFlowProbes:
+                    type: string
+                  disableGro:
+                    type: string
+                  disableSeMemoryCheck:
+                    type: string
+                  disableTso:
+                    type: string
+                  diskPerSe:
+                    type: string
+                  distributeLoadActiveStandby:
+                    type: string
+                  distributeQueues:
+                    type: string
+                  distributeVnics:
+                    type: string
+                  downstreamSendTimeout:
+                    type: string
+                  dpAggressiveDeqIntervalMsec:
+                    type: string
+                  dpAggressiveEnqIntervalMsec:
+                    type: string
+                  dpAggressiveHbFrequency:
+                    type: string
+                  dpAggressiveHbTimeoutCount:
+                    type: string
+                  dpDeqIntervalMsec:
+                    type: string
+                  dpEnqIntervalMsec:
+                    type: string
+                  dpHbFrequency:
+                    type: string
+                  dpHbTimeoutCount:
+                    type: string
+                  dpdkGroTimeoutInterval:
+                    type: string
+                  enableGratarpPermanent:
+                    type: string
+                  enableHsmLog:
+                    type: string
+                  enableHsmPriming:
+                    type: string
+                  enableMultiLb:
+                    type: string
+                  enablePcapTxRing:
+                    type: string
+                  ephemeralPortrangeEnd:
+                    type: string
+                  ephemeralPortrangeStart:
+                    type: string
+                  extraConfigMultiplier:
+                    type: string
+                  extraSharedConfigMemory:
+                    type: string
+                  flowTableNewSynMaxEntries:
+                    type: string
+                  freeListSize:
+                    type: string
+                  gcpConfig:
+                    items:
+                      properties:
+                        backendDataVpcNetworkName:
+                          type: string
+                        backendDataVpcProjectId:
+                          type: string
+                        backendDataVpcSubnetName:
+                          type: string
+                      type: object
+                    type: array
+                  gratarpPermanentPeriodicity:
+                    type: string
+                  grpcChannelConnectTimeout:
+                    type: string
+                  haMode:
+                    type: string
+                  handlePerPktAttack:
+                    type: string
+                  hardwaresecuritymodulegroupRef:
+                    type: string
+                  heapMinimumConfigMemory:
+                    type: string
+                  hmOnStandby:
+                    type: string
+                  hostAttributeKey:
+                    type: string
+                  hostAttributeValue:
+                    type: string
+                  hostGatewayMonitor:
+                    type: string
+                  httpRumConsoleLog:
+                    type: string
+                  httpRumMinContentLength:
+                    type: string
+                  hybridRssMode:
+                    type: string
+                  hypervisor:
+                    type: string
+                  ignoreDockerMacChange:
+                    type: string
+                  ignoreRttThreshold:
+                    type: string
+                  ingressAccessData:
+                    type: string
+                  ingressAccessMgmt:
+                    type: string
+                  instanceFlavor:
+                    type: string
+                  instanceFlavorInfo:
+                    items:
+                      properties:
+                        cost:
+                          type: string
+                        diskGb:
+                          type: string
+                        enhancedNw:
+                          type: string
+                        id:
+                          type: string
+                        isRecommended:
+                          type: string
+                        maxIp6SPerNic:
+                          type: string
+                        maxIpsPerNic:
+                          type: string
+                        maxNics:
+                          type: string
+                        meta:
+                          items:
+                            properties:
+                              key:
+                                type: string
+                              value:
+                                type: string
+                            type: object
+                          type: array
+                        name:
+                          type: string
+                        public:
+                          type: string
+                        ramMb:
+                          type: string
+                        vcpus:
+                          type: string
+                      type: object
+                    type: array
+                  iptables:
+                    items:
+                      properties:
+                        chain:
+                          type: string
+                        rules:
+                          items:
+                            properties:
+                              action:
+                                type: string
+                              dnatIp:
+                                items:
+                                  properties:
+                                    addr:
+                                      type: string
+                                    type:
+                                      type: string
+                                  type: object
+                                type: array
+                              dstIp:
+                                items:
+                                  properties:
+                                    ipAddr:
+                                      items:
+                                        properties:
+                                          addr:
+                                            type: string
+                                          type:
+                                            type: string
+                                        type: object
+                                      type: array
+                                    mask:
+                                      type: string
+                                  type: object
+                                type: array
+                              dstPort:
+                                items:
+                                  properties:
+                                    end:
+                                      type: string
+                                    start:
+                                      type: string
+                                  type: object
+                                type: array
+                              inputInterface:
+                                type: string
+                              outputInterface:
+                                type: string
+                              proto:
+                                type: string
+                              srcIp:
+                                items:
+                                  properties:
+                                    ipAddr:
+                                      items:
+                                        properties:
+                                          addr:
+                                            type: string
+                                          type:
+                                            type: string
+                                        type: object
+                                      type: array
+                                    mask:
+                                      type: string
+                                  type: object
+                                type: array
+                              srcPort:
+                                items:
+                                  properties:
+                                    end:
+                                      type: string
+                                    start:
+                                      type: string
+                                  type: object
+                                type: array
+                              tag:
+                                type: string
+                            type: object
+                          type: array
+                        table:
+                          type: string
+                      type: object
+                    type: array
+                  kniAllowedServerPorts:
+                    items:
+                      properties:
+                        protocol:
+                          type: string
+                        range:
+                          items:
+                            properties:
+                              end:
+                                type: string
+                              start:
+                                type: string
+                            type: object
+                          type: array
+                      type: object
+                    type: array
+                  l7ConnsPerCore:
+                    type: string
+                  l7ResvdListenConnsPerCore:
+                    type: string
+                  labels:
+                    items:
+                      properties:
+                        key:
+                          type: string
+                        value:
+                          type: string
+                      type: object
+                    type: array
+                  lbactionNumRequestsToDispatch:
+                    type: string
+                  lbactionRqPerRequestMaxRetries:
+                    type: string
+                  leastLoadCoreSelection:
+                    type: string
+                  licenseTier:
+                    type: string
+                  licenseType:
+                    type: string
+                  logAgentCompressLogs:
+                    type: string
+                  logAgentDebugEnabled:
+                    type: string
+                  logAgentFileSzAppl:
+                    type: string
+                  logAgentFileSzConn:
+                    type: string
+                  logAgentFileSzDebug:
+                    type: string
+                  logAgentFileSzEvent:
+                    type: string
+                  logAgentLogStorageMinSz:
+                    type: string
+                  logAgentMaxConcurrentRsync:
+                    type: string
+                  logAgentMaxStorageExcessPercent:
+                    type: string
+                  logAgentMaxStorageIgnorePercent:
+                    type: string
+                  logAgentMinStoragePerVs:
+                    type: string
+                  logAgentSleepInterval:
+                    type: string
+                  logAgentTraceEnabled:
+                    type: string
+                  logAgentUnknownVsTimer:
+                    type: string
+                  logDisksz:
+                    type: string
+                  logMallocFailure:
+                    type: string
+                  logMessageMaxFileListSize:
+                    type: string
+                  markers:
+                    items:
+                      properties:
+                        key:
+                          type: string
+                        values:
+                          items:
+                            type: string
+                          type: array
+                      type: object
+                    type: array
+                  maxConcurrentExternalHm:
+                    type: string
+                  maxCpuUsage:
+                    type: string
+                  maxMemoryPerMempool:
+                    type: string
+                  maxNumSeDps:
+                    type: string
+                  maxPublicIpsPerLb:
+                    type: string
+                  maxQueuesPerVnic:
+                    type: string
+                  maxRulesPerLb:
+                    type: string
+                  maxScaleoutPerVs:
+                    type: string
+                  maxSe:
+                    type: string
+                  maxSkbFrags:
+                    type: string
+                  maxVsPerSe:
+                    type: string
+                  memReserve:
+                    type: string
+                  memoryForConfigUpdate:
+                    type: string
+                  memoryPerSe:
+                    type: string
+                  mgmtNetworkRef:
+                    type: string
+                  mgmtSubnet:
+                    items:
+                      properties:
+                        ipAddr:
+                          items:
+                            properties:
+                              addr:
+                                type: string
+                              type:
+                                type: string
+                            type: object
+                          type: array
+                        mask:
+                          type: string
+                      type: object
+                    type: array
+                  minCpuUsage:
+                    type: string
+                  minScaleoutPerVs:
+                    type: string
+                  minSe:
+                    type: string
+                  minimumConnectionMemory:
+                    type: string
+                  nLogStreamingThreads:
+                    type: string
+                  name:
+                    type: string
+                  netlinkPollerThreads:
+                    type: string
+                  netlinkSockBufSize:
+                    type: string
+                  ngxFreeConnectionStack:
+                    type: string
+                  nonSignificantLogThrottle:
+                    type: string
+                  nsHelperDeqIntervalMsec:
+                    type: string
+                  ntpSyncFailEvent:
+                    type: string
+                  ntpSyncStatusInterval:
+                    type: string
+                  numDispatcherCores:
+                    type: string
+                  numDispatcherQueues:
+                    type: string
+                  numFlowCoresSumChangesToIgnore:
+                    type: string
+                  objsyncConfig:
+                    items:
+                      properties:
+                        objsyncCpuLimit:
+                          type: string
+                        objsyncHubElectInterval:
+                          type: string
+                        objsyncReconcileInterval:
+                          type: string
+                      type: object
+                    type: array
+                  objsyncPort:
+                    type: string
+                  openstackAvailabilityZones:
+                    items:
+                      type: string
+                    type: array
+                  openstackMgmtNetworkName:
+                    type: string
+                  openstackMgmtNetworkUuid:
+                    type: string
+                  osReservedMemory:
+                    type: string
+                  pcapTxMode:
+                    type: string
+                  pcapTxRingRdBalancingFactor:
+                    type: string
+                  perApp:
+                    type: string
+                  perVsAdmissionControl:
+                    type: string
+                  placementMode:
+                    type: string
+                  realtimeSeMetrics:
+                    items:
+                      properties:
+                        duration:
+                          type: string
+                        enabled:
+                          type: string
+                      type: object
+                    type: array
+                  rebootOnPanic:
+                    type: string
+                  replayVrfRoutesInterval:
+                    type: string
+                  resyncTimeInterval:
+                    type: string
+                  sdbFlushInterval:
+                    type: string
+                  sdbPipelineSize:
+                    type: string
+                  sdbScanCount:
+                    type: string
+                  seBandwidthType:
+                    type: string
+                  seDelayedFlowDelete:
+                    type: string
+                  seDeprovisionDelay:
+                    type: string
+                  seDosProfile:
+                    items:
+                      properties:
+                        threshInfo:
+                          items:
+                            properties:
+                              attack:
+                                type: string
+                              maxValue:
+                                type: string
+                              minValue:
+                                type: string
+                            type: object
+                          type: array
+                        threshPeriod:
+                          type: string
+                      type: object
+                    type: array
+                  seDpHmDrops:
+                    type: string
+                  seDpIfStatePollInterval:
+                    type: string
+                  seDpIsolation:
+                    type: string
+                  seDpIsolationNumNonDpCpus:
+                    type: string
+                  seDpLogNfEnqueuePercent:
+                    type: string
+                  seDpLogUdfEnqueuePercent:
+                    type: string
+                  seDpMaxHbVersion:
+                    type: string
+                  seDpVnicQueueStallEventSleep:
+                    type: string
+                  seDpVnicQueueStallThreshold:
+                    type: string
+                  seDpVnicQueueStallTimeout:
+                    type: string
+                  seDpVnicRestartOnQueueStallCount:
+                    type: string
+                  seDpVnicStallSeRestartWindow:
+                    type: string
+                  seDpdkPmd:
+                    type: string
+                  seDumpCoreOnAssert:
+                    type: string
+                  seEmulatedCores:
+                    type: string
+                  seFlowProbeRetries:
+                    type: string
+                  seFlowProbeRetryTimer:
+                    type: string
+                  seGroupAnalyticsPolicy:
+                    items:
+                      properties:
+                        metricsEventThresholds:
+                          items:
+                            properties:
+                              metricsEventThresholdType:
+                                type: string
+                              resetThreshold:
+                                type: string
+                              watermarkThresholds:
+                                items:
+                                  type: number
+                                type: array
+                            type: object
+                          type: array
+                      type: object
+                    type: array
+                  seHyperthreadedMode:
+                    type: string
+                  seIpEncapIpc:
+                    type: string
+                  seKniBurstFactor:
+                    type: string
+                  seL3EncapIpc:
+                    type: string
+                  seLogBufferAppBlockingDequeue:
+                    type: string
+                  seLogBufferConnBlockingDequeue:
+                    type: string
+                  seLogBufferEventsBlockingDequeue:
+                    type: string
+                  seLro:
+                    type: string
+                  seMpRingRetryCount:
+                    type: string
+                  seMtu:
+                    type: string
+                  seNamePrefix:
+                    type: string
+                  sePacketBufferMax:
+                    type: string
+                  sePcapLookahead:
+                    type: string
+                  sePcapPktCount:
+                    type: string
+                  sePcapPktSz:
+                    type: string
+                  sePcapQdiscBypass:
+                    type: string
+                  sePcapReinitFrequency:
+                    type: string
+                  sePcapReinitThreshold:
+                    type: string
+                  seProbePort:
+                    type: string
+                  seRlProp:
+                    items:
+                      properties:
+                        msfNumStages:
+                          type: string
+                        msfStageSize:
+                          type: string
+                      type: object
+                    type: array
+                  seRumSamplingNavInterval:
+                    type: string
+                  seRumSamplingNavPercent:
+                    type: string
+                  seRumSamplingResInterval:
+                    type: string
+                  seRumSamplingResPercent:
+                    type: string
+                  seSbDedicatedCore:
+                    type: string
+                  seSbThreads:
+                    type: string
+                  seThreadMultiplier:
+                    type: string
+                  seTimeTrackerProps:
+                    items:
+                      properties:
+                        egressAuditMode:
+                          type: string
+                        egressThreshold:
+                          type: string
+                        eventGenWindow:
+                          type: string
+                        ingressAuditMode:
+                          type: string
+                        ingressThreshold:
+                          type: string
+                      type: object
+                    type: array
+                  seTracertPortRange:
+                    items:
+                      properties:
+                        end:
+                          type: string
+                        start:
+                          type: string
+                      type: object
+                    type: array
+                  seTunnelMode:
+                    type: string
+                  seTunnelUdpPort:
+                    type: string
+                  seTxBatchSize:
+                    type: string
+                  seTxqThreshold:
+                    type: string
+                  seUdpEncapIpc:
+                    type: string
+                  seUseDpdk:
+                    type: string
+                  seVnicTxSwQueueFlushFrequency:
+                    type: string
+                  seVnicTxSwQueueSize:
+                    type: string
+                  seVsHbMaxPktsInBatch:
+                    type: string
+                  seVsHbMaxVsInPkt:
+                    type: string
+                  selfSeElection:
+                    type: string
+                  sendSeReadyTimeout:
+                    type: string
+                  serviceIp6Subnets:
+                    items:
+                      properties:
+                        ipAddr:
+                          items:
+                            properties:
+                              addr:
+                                type: string
+                              type:
+                                type: string
+                            type: object
+                          type: array
+                        mask:
+                          type: string
+                      type: object
+                    type: array
+                  serviceIpSubnets:
+                    items:
+                      properties:
+                        ipAddr:
+                          items:
+                            properties:
+                              addr:
+                                type: string
+                              type:
+                                type: string
+                            type: object
+                          type: array
+                        mask:
+                          type: string
+                      type: object
+                    type: array
+                  shmMinimumConfigMemory:
+                    type: string
+                  significantLogThrottle:
+                    type: string
+                  sslPreprocessSniHostname:
+                    type: string
+                  sslSessCachePerVs:
+                    type: string
+                  tenantRef:
+                    type: string
+                  transientSharedMemoryMax:
+                    type: string
+                  udfLogThrottle:
+                    type: string
+                  upstreamConnectTimeout:
+                    type: string
+                  upstreamConnpoolEnable:
+                    type: string
+                  upstreamReadTimeout:
+                    type: string
+                  upstreamSendTimeout:
+                    type: string
+                  useDpUtilForScaleout:
+                    type: string
+                  useHyperthreadedCores:
+                    type: string
+                  useLegacyNetlink:
+                    type: string
+                  useObjsync:
+                    type: string
+                  useStandardAlb:
+                    type: string
+                  userAgentCacheConfig:
+                    items:
+                      properties:
+                        batchSize:
+                          type: string
+                        controllerCacheSize:
+                          type: string
+                        maxAge:
+                          type: string
+                        maxLastHitTime:
+                          type: string
+                        maxUpstreamQueries:
+                          type: string
+                        maxWaitTime:
+                          type: string
+                        numEntriesUpstreamUpdate:
+                          type: string
+                        percentReservedForBadBots:
+                          type: string
+                        percentReservedForBrowsers:
+                          type: string
+                        percentReservedForGoodBots:
+                          type: string
+                        percentReservedForOutstanding:
+                          type: string
+                        seCacheSize:
+                          type: string
+                        upstreamUpdateInterval:
+                          type: string
+                      type: object
+                    type: array
+                  userDefinedMetricAge:
+                    type: string
+                  uuid:
+                    type: string
+                  vcenterClusters:
+                    items:
+                      properties:
+                        clusterRefs:
+                          items:
+                            type: string
+                          type: array
+                        include:
+                          type: string
+                      type: object
+                    type: array
+                  vcenterDatastoreMode:
+                    type: string
+                  vcenterDatastores:
+                    items:
+                      properties:
+                        datastoreName:
+                          type: string
+                        managedObjectId:
+                          type: string
+                      type: object
+                    type: array
+                  vcenterDatastoresInclude:
+                    type: string
+                  vcenterFolder:
+                    type: string
+                  vcenterHosts:
+                    items:
+                      properties:
+                        hostRefs:
+                          items:
+                            type: string
+                          type: array
+                        include:
+                          type: string
+                      type: object
+                    type: array
+                  vcenterParkingVnicPg:
+                    type: string
+                  vcenters:
+                    items:
+                      properties:
+                        clusters:
+                          items:
+                            properties:
+                              clusterId:
+                                type: string
+                              overrideVsphereHa:
+                                type: string
+                              vmgName:
+                                type: string
+                            type: object
+                          type: array
+                        nsxtClusters:
+                          items:
+                            properties:
+                              clusterIds:
+                                items:
+                                  type: string
+                                type: array
+                              include:
+                                type: string
+                            type: object
+                          type: array
+                        nsxtDatastores:
+                          items:
+                            properties:
+                              dsIds:
+                                items:
+                                  type: string
+                                type: array
+                              include:
+                                type: string
+                            type: object
+                          type: array
+                        nsxtHosts:
+                          items:
+                            properties:
+                              hostIds:
+                                items:
+                                  type: string
+                                type: array
+                              include:
+                                type: string
+                            type: object
+                          type: array
+                        vcenterFolder:
+                          type: string
+                        vcenterRef:
+                          type: string
+                      type: object
+                    type: array
+                  vcpusPerSe:
+                    type: string
+                  vipAsg:
+                    items:
+                      properties:
+                        configuration:
+                          items:
+                            properties:
+                              zones:
+                                items:
+                                  properties:
+                                    availabilityZone:
+                                      type: string
+                                    fipCapable:
+                                      type: string
+                                    subnetUuid:
+                                      type: string
+                                  type: object
+                                type: array
+                            type: object
+                          type: array
+                        policy:
+                          items:
+                            properties:
+                              dnsCooldown:
+                                type: string
+                              maxSize:
+                                type: string
+                              minSize:
+                                type: string
+                              suspend:
+                                type: string
+                            type: object
+                          type: array
+                      type: object
+                    type: array
+                  vnicDhcpIpCheckInterval:
+                    type: string
+                  vnicDhcpIpMaxRetries:
+                    type: string
+                  vnicIpDeleteInterval:
+                    type: string
+                  vnicProbeInterval:
+                    type: string
+                  vnicRpcRetryInterval:
+                    type: string
+                  vnicdbCmdHistorySize:
+                    type: string
+                  vsHostRedundancy:
+                    type: string
+                  vsScaleinTimeout:
+                    type: string
+                  vsScaleinTimeoutForUpgrade:
+                    type: string
+                  vsScaleoutTimeout:
+                    type: string
+                  vsSeScaleoutAdditionalWaitTime:
+                    type: string
+                  vsSeScaleoutReadyTimeout:
+                    type: string
+                  vsSwitchoverTimeout:
+                    type: string
+                  vssPlacement:
+                    items:
+                      properties:
+                        coreNonaffinity:
+                          type: string
+                        numSubcores:
+                          type: string
+                      type: object
+                    type: array
+                  vssPlacementEnabled:
+                    type: string
+                  wafMempool:
+                    type: string
+                  wafMempoolSize:
+                    type: string
+                type: object
+              managementPolicies:
+                default:
+                - '*'
+                description: 'THIS IS AN ALPHA FIELD. Do not use it in production.
+                  It is not honored unless the relevant Crossplane feature flag is
+                  enabled, and may be changed or removed without notice. ManagementPolicies
+                  specify the array of actions Crossplane is allowed to take on the
+                  managed and external resources. This field is planned to replace
+                  the DeletionPolicy field in a future release. Currently, both could
+                  be set independently and non-default values would be honored if
+                  the feature flag is enabled. If both are custom, the DeletionPolicy
+                  field will be ignored. See the design doc for more information:
+                  https://github.com/crossplane/crossplane/blob/499895a25d1a1a0ba1604944ef98ac7a1a71f197/design/design-doc-observe-only-resources.md?plain=1#L223
+                  and this one: https://github.com/crossplane/crossplane/blob/444267e84783136daa93568b364a5f01228cacbe/design/one-pager-ignore-changes.md'
+                items:
+                  description: A ManagementAction represents an action that the Crossplane
+                    controllers can take on an external resource.
+                  enum:
+                  - Observe
+                  - Create
+                  - Update
+                  - Delete
+                  - LateInitialize
+                  - '*'
+                  type: string
+                type: array
+              providerConfigRef:
+                default:
+                  name: default
+                description: ProviderConfigReference specifies how the provider that
+                  will be used to create, observe, update, and delete this managed
+                  resource should be configured.
+                properties:
+                  name:
+                    description: Name of the referenced object.
+                    type: string
+                  policy:
+                    description: Policies for referencing.
+                    properties:
+                      resolution:
+                        default: Required
+                        description: Resolution specifies whether resolution of this
+                          reference is required. The default is 'Required', which
+                          means the reconcile will fail if the reference cannot be
+                          resolved. 'Optional' means this reference will be a no-op
+                          if it cannot be resolved.
+                        enum:
+                        - Required
+                        - Optional
+                        type: string
+                      resolve:
+                        description: Resolve specifies when this reference should
+                          be resolved. The default is 'IfNotPresent', which will attempt
+                          to resolve the reference only when the corresponding field
+                          is not present. Use 'Always' to resolve the reference on
+                          every reconcile.
+                        enum:
+                        - Always
+                        - IfNotPresent
+                        type: string
+                    type: object
+                required:
+                - name
+                type: object
+              providerRef:
+                description: 'ProviderReference specifies the provider that will be
+                  used to create, observe, update, and delete this managed resource.
+                  Deprecated: Please use ProviderConfigReference, i.e. `providerConfigRef`'
+                properties:
+                  name:
+                    description: Name of the referenced object.
+                    type: string
+                  policy:
+                    description: Policies for referencing.
+                    properties:
+                      resolution:
+                        default: Required
+                        description: Resolution specifies whether resolution of this
+                          reference is required. The default is 'Required', which
+                          means the reconcile will fail if the reference cannot be
+                          resolved. 'Optional' means this reference will be a no-op
+                          if it cannot be resolved.
+                        enum:
+                        - Required
+                        - Optional
+                        type: string
+                      resolve:
+                        description: Resolve specifies when this reference should
+                          be resolved. The default is 'IfNotPresent', which will attempt
+                          to resolve the reference only when the corresponding field
+                          is not present. Use 'Always' to resolve the reference on
+                          every reconcile.
+                        enum:
+                        - Always
+                        - IfNotPresent
+                        type: string
+                    type: object
+                required:
+                - name
+                type: object
+              publishConnectionDetailsTo:
+                description: PublishConnectionDetailsTo specifies the connection secret
+                  config which contains a name, metadata and a reference to secret
+                  store config to which any connection details for this managed resource
+                  should be written. Connection details frequently include the endpoint,
+                  username, and password required to connect to the managed resource.
+                properties:
+                  configRef:
+                    default:
+                      name: default
+                    description: SecretStoreConfigRef specifies which secret store
+                      config should be used for this ConnectionSecret.
+                    properties:
+                      name:
+                        description: Name of the referenced object.
+                        type: string
+                      policy:
+                        description: Policies for referencing.
+                        properties:
+                          resolution:
+                            default: Required
+                            description: Resolution specifies whether resolution of
+                              this reference is required. The default is 'Required',
+                              which means the reconcile will fail if the reference
+                              cannot be resolved. 'Optional' means this reference
+                              will be a no-op if it cannot be resolved.
+                            enum:
+                            - Required
+                            - Optional
+                            type: string
+                          resolve:
+                            description: Resolve specifies when this reference should
+                              be resolved. The default is 'IfNotPresent', which will
+                              attempt to resolve the reference only when the corresponding
+                              field is not present. Use 'Always' to resolve the reference
+                              on every reconcile.
+                            enum:
+                            - Always
+                            - IfNotPresent
+                            type: string
+                        type: object
+                    required:
+                    - name
+                    type: object
+                  metadata:
+                    description: Metadata is the metadata for connection secret.
+                    properties:
+                      annotations:
+                        additionalProperties:
+                          type: string
+                        description: Annotations are the annotations to be added to
+                          connection secret. - For Kubernetes secrets, this will be
+                          used as "metadata.annotations". - It is up to Secret Store
+                          implementation for others store types.
+                        type: object
+                      labels:
+                        additionalProperties:
+                          type: string
+                        description: Labels are the labels/tags to be added to connection
+                          secret. - For Kubernetes secrets, this will be used as "metadata.labels".
+                          - It is up to Secret Store implementation for others store
+                          types.
+                        type: object
+                      type:
+                        description: Type is the SecretType for the connection secret.
+                          - Only valid for Kubernetes Secret Stores.
+                        type: string
+                    type: object
+                  name:
+                    description: Name is the name of the connection secret.
+                    type: string
+                required:
+                - name
+                type: object
+              writeConnectionSecretToRef:
+                description: WriteConnectionSecretToReference specifies the namespace
+                  and name of a Secret to which any connection details for this managed
+                  resource should be written. Connection details frequently include
+                  the endpoint, username, and password required to connect to the
+                  managed resource. This field is planned to be replaced in a future
+                  release in favor of PublishConnectionDetailsTo. Currently, both
+                  could be set independently and connection details would be published
+                  to both without affecting each other.
+                properties:
+                  name:
+                    description: Name of the secret.
+                    type: string
+                  namespace:
+                    description: Namespace of the secret.
+                    type: string
+                required:
+                - name
+                - namespace
+                type: object
+            required:
+            - forProvider
+            type: object
+            x-kubernetes-validations:
+            - message: name is a required parameter
+              rule: '!(''*'' in self.managementPolicies || ''Create'' in self.managementPolicies
+                || ''Update'' in self.managementPolicies) || has(self.forProvider.name)
+                || has(self.initProvider.name)'
+          status:
+            description: ServiceEngineGroupStatus defines the observed state of ServiceEngineGroup.
+            properties:
+              atProvider:
+                properties:
+                  acceleratedNetworking:
+                    type: string
+                  activeStandby:
+                    type: string
+                  aggressiveFailureDetection:
+                    type: string
+                  algo:
+                    type: string
+                  allowBurst:
+                    type: string
+                  appCachePercent:
+                    type: string
+                  appCacheThreshold:
+                    type: string
+                  appLearningMemoryPercent:
+                    type: string
+                  archiveShmLimit:
+                    type: string
+                  asyncSsl:
+                    type: string
+                  asyncSslThreads:
+                    type: string
+                  autoRebalance:
+                    type: string
+                  autoRebalanceCapacityPerSe:
+                    items:
+                      type: number
+                    type: array
+                  autoRebalanceCriteria:
+                    items:
+                      type: string
+                    type: array
+                  autoRebalanceInterval:
+                    type: string
+                  autoRedistributeActiveStandbyLoad:
+                    type: string
+                  availabilityZoneRefs:
+                    items:
+                      type: string
+                    type: array
+                  baremetalDispatcherHandlesFlows:
+                    type: string
+                  bgpPeerMonitorFailoverEnabled:
+                    type: string
+                  bgpStateUpdateInterval:
+                    type: string
+                  bufferSe:
+                    type: string
+                  cloudRef:
+                    type: string
+                  compressIpRulesForEachNsSubnet:
+                    type: string
+                  configDebugsOnAllCores:
+                    type: string
+                  configpbAttributes:
+                    items:
+                      properties:
+                        version:
+                          type: string
+                      type: object
+                    type: array
+                  connectionMemoryPercentage:
+                    type: string
+                  coreShmAppCache:
+                    type: string
+                  coreShmAppLearning:
+                    type: string
+                  cpuReserve:
+                    type: string
+                  cpuSocketAffinity:
+                    type: string
+                  customSecuritygroupsData:
+                    items:
+                      type: string
+                    type: array
+                  customSecuritygroupsMgmt:
+                    items:
+                      type: string
+                    type: array
+                  customTag:
+                    items:
+                      properties:
+                        tagKey:
+                          type: string
+                        tagVal:
+                          type: string
+                      type: object
+                    type: array
+                  dataNetworkId:
+                    type: string
+                  datascriptTimeout:
+                    type: string
+                  deactivateIpv6Discovery:
+                    type: string
+                  deactivateKniFilteringAtDispatcher:
+                    type: string
+                  dedicatedDispatcherCore:
+                    type: string
+                  description:
+                    type: string
+                  disableAviSecuritygroups:
+                    type: string
+                  disableCsumOffloads:
+                    type: string
+                  disableFlowProbes:
+                    type: string
+                  disableGro:
+                    type: string
+                  disableSeMemoryCheck:
+                    type: string
+                  disableTso:
+                    type: string
+                  diskPerSe:
+                    type: string
+                  distributeLoadActiveStandby:
+                    type: string
+                  distributeQueues:
+                    type: string
+                  distributeVnics:
+                    type: string
+                  downstreamSendTimeout:
+                    type: string
+                  dpAggressiveDeqIntervalMsec:
+                    type: string
+                  dpAggressiveEnqIntervalMsec:
+                    type: string
+                  dpAggressiveHbFrequency:
+                    type: string
+                  dpAggressiveHbTimeoutCount:
+                    type: string
+                  dpDeqIntervalMsec:
+                    type: string
+                  dpEnqIntervalMsec:
+                    type: string
+                  dpHbFrequency:
+                    type: string
+                  dpHbTimeoutCount:
+                    type: string
+                  dpdkGroTimeoutInterval:
+                    type: string
+                  enableGratarpPermanent:
+                    type: string
+                  enableHsmLog:
+                    type: string
+                  enableHsmPriming:
+                    type: string
+                  enableMultiLb:
+                    type: string
+                  enablePcapTxRing:
+                    type: string
+                  ephemeralPortrangeEnd:
+                    type: string
+                  ephemeralPortrangeStart:
+                    type: string
+                  extraConfigMultiplier:
+                    type: string
+                  extraSharedConfigMemory:
+                    type: string
+                  flowTableNewSynMaxEntries:
+                    type: string
+                  freeListSize:
+                    type: string
+                  gcpConfig:
+                    items:
+                      properties:
+                        backendDataVpcNetworkName:
+                          type: string
+                        backendDataVpcProjectId:
+                          type: string
+                        backendDataVpcSubnetName:
+                          type: string
+                      type: object
+                    type: array
+                  gratarpPermanentPeriodicity:
+                    type: string
+                  grpcChannelConnectTimeout:
+                    type: string
+                  haMode:
+                    type: string
+                  handlePerPktAttack:
+                    type: string
+                  hardwaresecuritymodulegroupRef:
+                    type: string
+                  heapMinimumConfigMemory:
+                    type: string
+                  hmOnStandby:
+                    type: string
+                  hostAttributeKey:
+                    type: string
+                  hostAttributeValue:
+                    type: string
+                  hostGatewayMonitor:
+                    type: string
+                  httpRumConsoleLog:
+                    type: string
+                  httpRumMinContentLength:
+                    type: string
+                  hybridRssMode:
+                    type: string
+                  hypervisor:
+                    type: string
+                  id:
+                    type: string
+                  ignoreDockerMacChange:
+                    type: string
+                  ignoreRttThreshold:
+                    type: string
+                  ingressAccessData:
+                    type: string
+                  ingressAccessMgmt:
+                    type: string
+                  instanceFlavor:
+                    type: string
+                  instanceFlavorInfo:
+                    items:
+                      properties:
+                        cost:
+                          type: string
+                        diskGb:
+                          type: string
+                        enhancedNw:
+                          type: string
+                        id:
+                          type: string
+                        isRecommended:
+                          type: string
+                        maxIp6SPerNic:
+                          type: string
+                        maxIpsPerNic:
+                          type: string
+                        maxNics:
+                          type: string
+                        meta:
+                          items:
+                            properties:
+                              key:
+                                type: string
+                              value:
+                                type: string
+                            type: object
+                          type: array
+                        name:
+                          type: string
+                        public:
+                          type: string
+                        ramMb:
+                          type: string
+                        vcpus:
+                          type: string
+                      type: object
+                    type: array
+                  iptables:
+                    items:
+                      properties:
+                        chain:
+                          type: string
+                        rules:
+                          items:
+                            properties:
+                              action:
+                                type: string
+                              dnatIp:
+                                items:
+                                  properties:
+                                    addr:
+                                      type: string
+                                    type:
+                                      type: string
+                                  type: object
+                                type: array
+                              dstIp:
+                                items:
+                                  properties:
+                                    ipAddr:
+                                      items:
+                                        properties:
+                                          addr:
+                                            type: string
+                                          type:
+                                            type: string
+                                        type: object
+                                      type: array
+                                    mask:
+                                      type: string
+                                  type: object
+                                type: array
+                              dstPort:
+                                items:
+                                  properties:
+                                    end:
+                                      type: string
+                                    start:
+                                      type: string
+                                  type: object
+                                type: array
+                              inputInterface:
+                                type: string
+                              outputInterface:
+                                type: string
+                              proto:
+                                type: string
+                              srcIp:
+                                items:
+                                  properties:
+                                    ipAddr:
+                                      items:
+                                        properties:
+                                          addr:
+                                            type: string
+                                          type:
+                                            type: string
+                                        type: object
+                                      type: array
+                                    mask:
+                                      type: string
+                                  type: object
+                                type: array
+                              srcPort:
+                                items:
+                                  properties:
+                                    end:
+                                      type: string
+                                    start:
+                                      type: string
+                                  type: object
+                                type: array
+                              tag:
+                                type: string
+                            type: object
+                          type: array
+                        table:
+                          type: string
+                      type: object
+                    type: array
+                  kniAllowedServerPorts:
+                    items:
+                      properties:
+                        protocol:
+                          type: string
+                        range:
+                          items:
+                            properties:
+                              end:
+                                type: string
+                              start:
+                                type: string
+                            type: object
+                          type: array
+                      type: object
+                    type: array
+                  l7ConnsPerCore:
+                    type: string
+                  l7ResvdListenConnsPerCore:
+                    type: string
+                  labels:
+                    items:
+                      properties:
+                        key:
+                          type: string
+                        value:
+                          type: string
+                      type: object
+                    type: array
+                  lbactionNumRequestsToDispatch:
+                    type: string
+                  lbactionRqPerRequestMaxRetries:
+                    type: string
+                  leastLoadCoreSelection:
+                    type: string
+                  licenseTier:
+                    type: string
+                  licenseType:
+                    type: string
+                  logAgentCompressLogs:
+                    type: string
+                  logAgentDebugEnabled:
+                    type: string
+                  logAgentFileSzAppl:
+                    type: string
+                  logAgentFileSzConn:
+                    type: string
+                  logAgentFileSzDebug:
+                    type: string
+                  logAgentFileSzEvent:
+                    type: string
+                  logAgentLogStorageMinSz:
+                    type: string
+                  logAgentMaxConcurrentRsync:
+                    type: string
+                  logAgentMaxStorageExcessPercent:
+                    type: string
+                  logAgentMaxStorageIgnorePercent:
+                    type: string
+                  logAgentMinStoragePerVs:
+                    type: string
+                  logAgentSleepInterval:
+                    type: string
+                  logAgentTraceEnabled:
+                    type: string
+                  logAgentUnknownVsTimer:
+                    type: string
+                  logDisksz:
+                    type: string
+                  logMallocFailure:
+                    type: string
+                  logMessageMaxFileListSize:
+                    type: string
+                  markers:
+                    items:
+                      properties:
+                        key:
+                          type: string
+                        values:
+                          items:
+                            type: string
+                          type: array
+                      type: object
+                    type: array
+                  maxConcurrentExternalHm:
+                    type: string
+                  maxCpuUsage:
+                    type: string
+                  maxMemoryPerMempool:
+                    type: string
+                  maxNumSeDps:
+                    type: string
+                  maxPublicIpsPerLb:
+                    type: string
+                  maxQueuesPerVnic:
+                    type: string
+                  maxRulesPerLb:
+                    type: string
+                  maxScaleoutPerVs:
+                    type: string
+                  maxSe:
+                    type: string
+                  maxSkbFrags:
+                    type: string
+                  maxVsPerSe:
+                    type: string
+                  memReserve:
+                    type: string
+                  memoryForConfigUpdate:
+                    type: string
+                  memoryPerSe:
+                    type: string
+                  mgmtNetworkRef:
+                    type: string
+                  mgmtSubnet:
+                    items:
+                      properties:
+                        ipAddr:
+                          items:
+                            properties:
+                              addr:
+                                type: string
+                              type:
+                                type: string
+                            type: object
+                          type: array
+                        mask:
+                          type: string
+                      type: object
+                    type: array
+                  minCpuUsage:
+                    type: string
+                  minScaleoutPerVs:
+                    type: string
+                  minSe:
+                    type: string
+                  minimumConnectionMemory:
+                    type: string
+                  nLogStreamingThreads:
+                    type: string
+                  name:
+                    type: string
+                  netlinkPollerThreads:
+                    type: string
+                  netlinkSockBufSize:
+                    type: string
+                  ngxFreeConnectionStack:
+                    type: string
+                  nonSignificantLogThrottle:
+                    type: string
+                  nsHelperDeqIntervalMsec:
+                    type: string
+                  ntpSyncFailEvent:
+                    type: string
+                  ntpSyncStatusInterval:
+                    type: string
+                  numDispatcherCores:
+                    type: string
+                  numDispatcherQueues:
+                    type: string
+                  numFlowCoresSumChangesToIgnore:
+                    type: string
+                  objsyncConfig:
+                    items:
+                      properties:
+                        objsyncCpuLimit:
+                          type: string
+                        objsyncHubElectInterval:
+                          type: string
+                        objsyncReconcileInterval:
+                          type: string
+                      type: object
+                    type: array
+                  objsyncPort:
+                    type: string
+                  openstackAvailabilityZones:
+                    items:
+                      type: string
+                    type: array
+                  openstackMgmtNetworkName:
+                    type: string
+                  openstackMgmtNetworkUuid:
+                    type: string
+                  osReservedMemory:
+                    type: string
+                  pcapTxMode:
+                    type: string
+                  pcapTxRingRdBalancingFactor:
+                    type: string
+                  perApp:
+                    type: string
+                  perVsAdmissionControl:
+                    type: string
+                  placementMode:
+                    type: string
+                  realtimeSeMetrics:
+                    items:
+                      properties:
+                        duration:
+                          type: string
+                        enabled:
+                          type: string
+                      type: object
+                    type: array
+                  rebootOnPanic:
+                    type: string
+                  replayVrfRoutesInterval:
+                    type: string
+                  resyncTimeInterval:
+                    type: string
+                  sdbFlushInterval:
+                    type: string
+                  sdbPipelineSize:
+                    type: string
+                  sdbScanCount:
+                    type: string
+                  seBandwidthType:
+                    type: string
+                  seDelayedFlowDelete:
+                    type: string
+                  seDeprovisionDelay:
+                    type: string
+                  seDosProfile:
+                    items:
+                      properties:
+                        threshInfo:
+                          items:
+                            properties:
+                              attack:
+                                type: string
+                              maxValue:
+                                type: string
+                              minValue:
+                                type: string
+                            type: object
+                          type: array
+                        threshPeriod:
+                          type: string
+                      type: object
+                    type: array
+                  seDpHmDrops:
+                    type: string
+                  seDpIfStatePollInterval:
+                    type: string
+                  seDpIsolation:
+                    type: string
+                  seDpIsolationNumNonDpCpus:
+                    type: string
+                  seDpLogNfEnqueuePercent:
+                    type: string
+                  seDpLogUdfEnqueuePercent:
+                    type: string
+                  seDpMaxHbVersion:
+                    type: string
+                  seDpVnicQueueStallEventSleep:
+                    type: string
+                  seDpVnicQueueStallThreshold:
+                    type: string
+                  seDpVnicQueueStallTimeout:
+                    type: string
+                  seDpVnicRestartOnQueueStallCount:
+                    type: string
+                  seDpVnicStallSeRestartWindow:
+                    type: string
+                  seDpdkPmd:
+                    type: string
+                  seDumpCoreOnAssert:
+                    type: string
+                  seEmulatedCores:
+                    type: string
+                  seFlowProbeRetries:
+                    type: string
+                  seFlowProbeRetryTimer:
+                    type: string
+                  seGroupAnalyticsPolicy:
+                    items:
+                      properties:
+                        metricsEventThresholds:
+                          items:
+                            properties:
+                              metricsEventThresholdType:
+                                type: string
+                              resetThreshold:
+                                type: string
+                              watermarkThresholds:
+                                items:
+                                  type: number
+                                type: array
+                            type: object
+                          type: array
+                      type: object
+                    type: array
+                  seHyperthreadedMode:
+                    type: string
+                  seIpEncapIpc:
+                    type: string
+                  seKniBurstFactor:
+                    type: string
+                  seL3EncapIpc:
+                    type: string
+                  seLogBufferAppBlockingDequeue:
+                    type: string
+                  seLogBufferConnBlockingDequeue:
+                    type: string
+                  seLogBufferEventsBlockingDequeue:
+                    type: string
+                  seLro:
+                    type: string
+                  seMpRingRetryCount:
+                    type: string
+                  seMtu:
+                    type: string
+                  seNamePrefix:
+                    type: string
+                  sePacketBufferMax:
+                    type: string
+                  sePcapLookahead:
+                    type: string
+                  sePcapPktCount:
+                    type: string
+                  sePcapPktSz:
+                    type: string
+                  sePcapQdiscBypass:
+                    type: string
+                  sePcapReinitFrequency:
+                    type: string
+                  sePcapReinitThreshold:
+                    type: string
+                  seProbePort:
+                    type: string
+                  seRlProp:
+                    items:
+                      properties:
+                        msfNumStages:
+                          type: string
+                        msfStageSize:
+                          type: string
+                      type: object
+                    type: array
+                  seRumSamplingNavInterval:
+                    type: string
+                  seRumSamplingNavPercent:
+                    type: string
+                  seRumSamplingResInterval:
+                    type: string
+                  seRumSamplingResPercent:
+                    type: string
+                  seSbDedicatedCore:
+                    type: string
+                  seSbThreads:
+                    type: string
+                  seThreadMultiplier:
+                    type: string
+                  seTimeTrackerProps:
+                    items:
+                      properties:
+                        egressAuditMode:
+                          type: string
+                        egressThreshold:
+                          type: string
+                        eventGenWindow:
+                          type: string
+                        ingressAuditMode:
+                          type: string
+                        ingressThreshold:
+                          type: string
+                      type: object
+                    type: array
+                  seTracertPortRange:
+                    items:
+                      properties:
+                        end:
+                          type: string
+                        start:
+                          type: string
+                      type: object
+                    type: array
+                  seTunnelMode:
+                    type: string
+                  seTunnelUdpPort:
+                    type: string
+                  seTxBatchSize:
+                    type: string
+                  seTxqThreshold:
+                    type: string
+                  seUdpEncapIpc:
+                    type: string
+                  seUseDpdk:
+                    type: string
+                  seVnicTxSwQueueFlushFrequency:
+                    type: string
+                  seVnicTxSwQueueSize:
+                    type: string
+                  seVsHbMaxPktsInBatch:
+                    type: string
+                  seVsHbMaxVsInPkt:
+                    type: string
+                  selfSeElection:
+                    type: string
+                  sendSeReadyTimeout:
+                    type: string
+                  serviceIp6Subnets:
+                    items:
+                      properties:
+                        ipAddr:
+                          items:
+                            properties:
+                              addr:
+                                type: string
+                              type:
+                                type: string
+                            type: object
+                          type: array
+                        mask:
+                          type: string
+                      type: object
+                    type: array
+                  serviceIpSubnets:
+                    items:
+                      properties:
+                        ipAddr:
+                          items:
+                            properties:
+                              addr:
+                                type: string
+                              type:
+                                type: string
+                            type: object
+                          type: array
+                        mask:
+                          type: string
+                      type: object
+                    type: array
+                  shmMinimumConfigMemory:
+                    type: string
+                  significantLogThrottle:
+                    type: string
+                  sslPreprocessSniHostname:
+                    type: string
+                  sslSessCachePerVs:
+                    type: string
+                  tenantRef:
+                    type: string
+                  transientSharedMemoryMax:
+                    type: string
+                  udfLogThrottle:
+                    type: string
+                  upstreamConnectTimeout:
+                    type: string
+                  upstreamConnpoolEnable:
+                    type: string
+                  upstreamReadTimeout:
+                    type: string
+                  upstreamSendTimeout:
+                    type: string
+                  useDpUtilForScaleout:
+                    type: string
+                  useHyperthreadedCores:
+                    type: string
+                  useLegacyNetlink:
+                    type: string
+                  useObjsync:
+                    type: string
+                  useStandardAlb:
+                    type: string
+                  userAgentCacheConfig:
+                    items:
+                      properties:
+                        batchSize:
+                          type: string
+                        controllerCacheSize:
+                          type: string
+                        maxAge:
+                          type: string
+                        maxLastHitTime:
+                          type: string
+                        maxUpstreamQueries:
+                          type: string
+                        maxWaitTime:
+                          type: string
+                        numEntriesUpstreamUpdate:
+                          type: string
+                        percentReservedForBadBots:
+                          type: string
+                        percentReservedForBrowsers:
+                          type: string
+                        percentReservedForGoodBots:
+                          type: string
+                        percentReservedForOutstanding:
+                          type: string
+                        seCacheSize:
+                          type: string
+                        upstreamUpdateInterval:
+                          type: string
+                      type: object
+                    type: array
+                  userDefinedMetricAge:
+                    type: string
+                  uuid:
+                    type: string
+                  vcenterClusters:
+                    items:
+                      properties:
+                        clusterRefs:
+                          items:
+                            type: string
+                          type: array
+                        include:
+                          type: string
+                      type: object
+                    type: array
+                  vcenterDatastoreMode:
+                    type: string
+                  vcenterDatastores:
+                    items:
+                      properties:
+                        datastoreName:
+                          type: string
+                        managedObjectId:
+                          type: string
+                      type: object
+                    type: array
+                  vcenterDatastoresInclude:
+                    type: string
+                  vcenterFolder:
+                    type: string
+                  vcenterHosts:
+                    items:
+                      properties:
+                        hostRefs:
+                          items:
+                            type: string
+                          type: array
+                        include:
+                          type: string
+                      type: object
+                    type: array
+                  vcenterParkingVnicPg:
+                    type: string
+                  vcenters:
+                    items:
+                      properties:
+                        clusters:
+                          items:
+                            properties:
+                              clusterId:
+                                type: string
+                              overrideVsphereHa:
+                                type: string
+                              vmgName:
+                                type: string
+                            type: object
+                          type: array
+                        nsxtClusters:
+                          items:
+                            properties:
+                              clusterIds:
+                                items:
+                                  type: string
+                                type: array
+                              include:
+                                type: string
+                            type: object
+                          type: array
+                        nsxtDatastores:
+                          items:
+                            properties:
+                              dsIds:
+                                items:
+                                  type: string
+                                type: array
+                              include:
+                                type: string
+                            type: object
+                          type: array
+                        nsxtHosts:
+                          items:
+                            properties:
+                              hostIds:
+                                items:
+                                  type: string
+                                type: array
+                              include:
+                                type: string
+                            type: object
+                          type: array
+                        vcenterFolder:
+                          type: string
+                        vcenterRef:
+                          type: string
+                      type: object
+                    type: array
+                  vcpusPerSe:
+                    type: string
+                  vipAsg:
+                    items:
+                      properties:
+                        configuration:
+                          items:
+                            properties:
+                              zones:
+                                items:
+                                  properties:
+                                    availabilityZone:
+                                      type: string
+                                    fipCapable:
+                                      type: string
+                                    subnetUuid:
+                                      type: string
+                                  type: object
+                                type: array
+                            type: object
+                          type: array
+                        policy:
+                          items:
+                            properties:
+                              dnsCooldown:
+                                type: string
+                              maxSize:
+                                type: string
+                              minSize:
+                                type: string
+                              suspend:
+                                type: string
+                            type: object
+                          type: array
+                      type: object
+                    type: array
+                  vnicDhcpIpCheckInterval:
+                    type: string
+                  vnicDhcpIpMaxRetries:
+                    type: string
+                  vnicIpDeleteInterval:
+                    type: string
+                  vnicProbeInterval:
+                    type: string
+                  vnicRpcRetryInterval:
+                    type: string
+                  vnicdbCmdHistorySize:
+                    type: string
+                  vsHostRedundancy:
+                    type: string
+                  vsScaleinTimeout:
+                    type: string
+                  vsScaleinTimeoutForUpgrade:
+                    type: string
+                  vsScaleoutTimeout:
+                    type: string
+                  vsSeScaleoutAdditionalWaitTime:
+                    type: string
+                  vsSeScaleoutReadyTimeout:
+                    type: string
+                  vsSwitchoverTimeout:
+                    type: string
+                  vssPlacement:
+                    items:
+                      properties:
+                        coreNonaffinity:
+                          type: string
+                        numSubcores:
+                          type: string
+                      type: object
+                    type: array
+                  vssPlacementEnabled:
+                    type: string
+                  wafMempool:
+                    type: string
+                  wafMempoolSize:
+                    type: string
+                type: object
+              conditions:
+                description: Conditions of the resource.
+                items:
+                  description: A Condition that may apply to a resource.
+                  properties:
+                    lastTransitionTime:
+                      description: LastTransitionTime is the last time this condition
+                        transitioned from one status to another.
+                      format: date-time
+                      type: string
+                    message:
+                      description: A Message containing details about this condition's
+                        last transition from one status to another, if any.
+                      type: string
+                    reason:
+                      description: A Reason for this condition's last transition from
+                        one status to another.
+                      type: string
+                    status:
+                      description: Status of this condition; is it currently True,
+                        False, or Unknown?
+                      type: string
+                    type:
+                      description: Type of this condition. At most one of each condition
+                        type may apply to a resource at any point in time.
+                      type: string
+                  required:
+                  - lastTransitionTime
+                  - reason
+                  - status
+                  - type
+                  type: object
+                type: array
+            type: object
+        required:
+        - spec
+        type: object
+    served: true
+    storage: true
+    subresources:
+      status: {}
